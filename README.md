@@ -78,9 +78,7 @@ The state lives in `docs/planning/workflow-state.md` so the next agent session r
 
 ## Why this exists
 
-I spent 3 months experimenting with building AI products and testing different workflows. This is the workflow that actually worked — intake questions, slice discipline, QA handoff, cross-tool consistency. 
-
-The category norm in 2026 is open and forkable: `awesome-cursorrules` has 27k stars, BMAD is open source, shadcn made free components into a category. So I'm making it available free for everyone.
+I spent 3 months experimenting with building AI products and testing different workflows. This is the workflow that actually worked — intake questions, slice discipline, QA handoff, cross-tool consistency.
 
 ## Why no runtime, why just Markdown
 
