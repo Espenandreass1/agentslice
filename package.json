@@ -1,0 +1,50 @@
+{
+  "name": "agentslice",
+  "version": "1.0.0",
+  "description": "A Markdown workflow kit that makes Cursor, Claude Code, Codex and Windsurf ask before they edit.",
+  "type": "module",
+  "bin": {
+    "agentslice": "./bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "kit",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "cursor",
+    "claude-code",
+    "codex",
+    "windsurf",
+    "ai-coding",
+    "agent",
+    "workflow",
+    "rules",
+    "markdown",
+    "developer-tools"
+  ],
+  "homepage": "https://getagentslice.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/espenandreass1/agentslice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/espenandreass1/agentslice/issues"
+  },
+  "author": "Espen Andreassen",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.0.0",
+    "fs-extra": "^11.2.0",
+    "kleur": "^4.1.5",
+    "prompts": "^2.4.2"
+  }
+}

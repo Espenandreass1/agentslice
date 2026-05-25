@@ -1,0 +1,39 @@
+---
+trigger: always_on
+description: AgentSlice workflow rules for scoped builds, QA gates, and release approval.
+---
+
+# AgentSlice Rules
+
+Use `AGENT_RULES.md` and `docs/planning/workflow-state.md` as the source of truth for the current phase, approval gates, and valid phases.
+
+This is a Markdown workflow harness, not an executable runtime or hard gatekeeper.
+
+Before planning, building, QA, release, or resuming work, read `AGENT_RULES.md` and `docs/planning/workflow-state.md`.
+
+If the state file is missing, create it from the kit template before continuing.
+
+## Hard stops
+
+- If there is no approved slice, do not write implementation code.
+- If there is no approved spec, do not write implementation code.
+- If `Spec approved` is not `Yes`, do not write implementation code.
+- If likely touched files or areas are not listed in the approved spec, do not write implementation code.
+- If QA result is `FAIL`, do not recommend release.
+- If release is not approved by the human, do not deploy.
+- If scope or state is unclear, stop and ask.
+
+## Required behavior
+
+- Default to minimal mode.
+- Ask up to 5 product intake questions during first-run intake.
+- If stack is unknown, use the bundled `pick-tech-stack` instructions and ask before writing the final stack.
+- If `pick-tech-stack` is not installed as a runtime skill, read `.agents/skills/pick-tech-stack/SKILL.md` or `.claude/skills/pick-tech-stack/SKILL.md`. If neither file is readable, make a simple recommendation yourself and say you used the fallback.
+- Propose slices adaptively: 1 for tiny projects, 2-3 for small products, 3-5 only for larger or unclear scope.
+- Keep every slice small enough for a human to review in under 5 minutes.
+- Wait for human slice approval before writing the full spec.
+- Wait for human spec approval before implementation.
+- Run QA as a separate subagent or independent QA role.
+- Update `docs/planning/workflow-state.md` after every phase change.
+- Append real approvals and meaningful trade-offs to `docs/planning/decisions.md`.
+- Update changelog only after release approval.
