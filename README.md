@@ -101,7 +101,7 @@ The fastest way to help: open an issue with the exact prompt + tool + transcript
 
 ## Maintainer
 
-Built and maintained by [Espen Andreassen](https://www.linkedin.com/in/andreassenespen/). Reach out at espen@getagentslice.com or [open a discussion](https://github.com/espenandreass1/agentslice/discussions).
+Built and maintained by [Espen Andreassen](https://www.linkedin.com/in/andreassenespen/). Reach out at espenandreass1@gmail.com or [open a discussion](https://github.com/espenandreass1/agentslice/discussions).
 
 ---
 
