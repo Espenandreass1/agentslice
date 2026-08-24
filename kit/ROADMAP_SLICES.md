@@ -1,27 +1,17 @@
-# Roadmap Slices
+# Roadmap Snapshot (optional)
 
-This is the human-readable roadmap view. Keep it lightweight. The detailed planning surface lives in `docs/planning/next-slices.md`.
+This is an optional human-facing orientation, not active agent preflight and not an approval queue. Keep it short; live work belongs in `docs/planning/next-slices.md`.
 
-## Product direction
+## Direction
 
-[One short paragraph describing where the product is going.]
+[One short paragraph.]
 
-## Next 3-5 slices
+## Near horizon
 
-| Order | Slice | User value | Risk | Status |
-|---|---|---|---|---|
-| 1 | [Name] | [Value] | [Risk] | Proposed |
-| 2 | [Name] | [Value] | [Risk] | Proposed |
-| 3 | [Name] | [Value] | [Risk] | Proposed |
+| Order | Slice | User value | Status |
+|---|---|---|---|
+| 1 | [Name] | [Value] | Proposed / active / released |
+| 2 | [Name, if useful] | [Value] | Proposed |
+| 3 | [Name, if useful] | [Value] | Proposed |
 
-## Current recommendation
-
-[Recommended slice and why it is the right next step.]
-
-## Parked ideas
-
-- [Idea]
-
-## Rule
-
-Do not treat this as permission to build every slice. Only the currently approved slice may be specified and implemented.
+Archive superseded roadmap snapshots rather than letting this become history. Only the approved current slice may be specified or implemented.

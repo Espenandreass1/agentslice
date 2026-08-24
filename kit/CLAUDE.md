@@ -1,74 +1,29 @@
-# AgentSlice - Claude Code Project Memory
+# AgentSlice — Claude Code Project Memory
 
-This project uses the AgentSlice workflow. Operate inside `AGENT_RULES.md` and `docs/planning/workflow-state.md` and do not skip approval gates.
+Follow the canonical contract in `AGENT_RULES.md`. `docs/planning/workflow-state.md` is the only source of truth for active phase and approval fields.
 
-This is a Markdown workflow kit, not an executable runtime. Follow the gates, but be clear when something is a human approval rather than technical enforcement.
+## Active preflight
 
-## Read first
-
-Before planning, building, QA, release, or resuming work, inspect:
+At every start, resume, and phase change, read:
 
 - `AGENT_RULES.md`
+- `docs/planning/active-context.md`
 - `docs/planning/workflow-state.md`
-- `docs/product/vision.md`
-- `docs/engineering/tech-stack.md`
 - `docs/planning/current-slice.md`
-- `docs/planning/next-slices.md`
-- `docs/planning/decisions.md`
-- `docs/specs/`
-- `docs/qa/`
-- `docs/release/changelog.md`
-- `docs/engineering/coding-rules.md`
 
-If `docs/planning/workflow-state.md` is missing, create it from the kit template before continuing.
+Then use role-specific context only: planning reads vision, tech stack, and live next slices; build reads the approved spec and coding rules; QA reads the approved spec, changed files, QA plan, and at most one directly relevant prior QA report; release reads current spec, QA report, and changelog. Use `docs/archive/README.md` plus targeted search for history—never a bulk preflight of historical folders.
 
-## Planning behavior
+## Gates and hard stops
 
-- Default to minimal mode.
-- Ask at most 5 intake questions.
-- Do not create heavy roadmap or architecture docs unless the project needs them.
-- If stack is unknown, use the bundled `pick-tech-stack` instructions and ask for approval before writing the final stack.
-- If `/pick-tech-stack` is not installed as a runtime skill, read `.claude/skills/pick-tech-stack/SKILL.md` or `.agents/skills/pick-tech-stack/SKILL.md`. If neither file is readable, make a simple recommendation yourself and say you used the fallback.
-- Make slice planning adaptive:
-  - Tiny project: propose 1 recommended slice.
-  - Small product/MVP: propose 2-3 slice options.
-  - Larger or unclear product: propose 3-5 slice options.
+Keep all four gates: human slice approval, human spec approval, independent QA `PASS`/`PASS WITH NOTES`, then human release approval. Do not write implementation code without the approved slice and spec, recommend release after `FAIL`, deploy without release approval, or continue when phase/scope is unclear.
 
-## Hard stops
+The quick-fix lane is still fully gated and never reduces safeguards for auth, ownership, data, privacy, commerce, shared contracts, migrations, or production configuration.
 
-- If there is no approved slice, do not write implementation code.
-- If there is no approved spec, do not write implementation code.
-- If `Spec approved` is not `Yes`, do not write implementation code.
-- If likely touched files or areas are not listed in the approved spec, do not write implementation code.
-- If QA result is `FAIL`, do not recommend release.
-- If release is not approved by the human, do not deploy.
-- If the current phase is unclear, stop and ask what phase to resume from.
+## Workflow behavior
 
-Accept natural approval language such as "approve", "approved", "yes, go", "go for it", "looks good", or equivalent. If approval is ambiguous, ask for confirmation before editing application code.
+- Default to minimal mode and ask at most five intake questions.
+- Keep `active-context.md` under 180 lines; keep `next-slices.md` to one to three living candidates.
+- Preserve closed history in dated archives with `docs/archive/README.md` as the index.
+- QA is independent and follows `docs/qa/qa-plan.md`; its report links to evidence rather than duplicating the spec.
 
-## QA handoff
-
-When QA starts, provide the QA subagent or independent QA role:
-
-- Approved spec
-- Changed files
-- Acceptance criteria
-- Test commands
-- Known risks
-
-QA must return `PASS`, `PASS WITH NOTES`, or `FAIL`, plus release blockers, non-blocking issues, required fixes, and checks run.
-
-If there are no real subagents, switch into an independent QA role and review critically.
-
-## Useful skills
-
-These may be exposed as runtime skills in some tools. If not, read the bundled `SKILL.md` files directly.
-
-- `/intake-product-vision`
-- `/pick-tech-stack`
-- `/write-product-slice`
-- `/write-build-spec`
-- `/run-qa-gate`
-- `/fix-from-qa-report`
-- `/prepare-release`
-- `/advance-to-next-slice`
+If a named AgentSlice skill is not a runtime command, read `.claude/skills/<skill-name>/SKILL.md` or `.agents/skills/<skill-name>/SKILL.md` before using a fallback.

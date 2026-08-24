@@ -1,5 +1,7 @@
-# Open Questions
+# Active Open Questions
 
-| Question | Owner | Needed by | Status |
+Keep only questions that block or materially shape active work. Move resolved or stale questions to a dated archive and add the location to `docs/archive/README.md`.
+
+| Question | Needed for | Owner | Status |
 |---|---|---|---|
-| [Question] | [Owner] | [Date/slice] | Open |
+| [Question] | [Slice or gate] | [Owner] | Open |

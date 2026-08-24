@@ -19,16 +19,16 @@ If `pick-tech-stack` is not installed as a runtime skill in the current tool, re
 
 ## Why this stack
 
-- 
+-
 
 ## Trade-offs accepted
 
-- 
+-
 
 ## Avoid for now
 
-- 
+-
 
 ## Decision record
 
-When the stack is chosen, append the decision and rationale to `docs/planning/decisions.md`.
+When the stack is chosen, record its active rationale in `docs/planning/decisions.md` and summarize the active constraint in `docs/planning/active-context.md`. Archive superseded stack decisions through `docs/archive/README.md`.

@@ -1,6 +1,6 @@
 # Regression Checklist
 
-Use this only for areas touched by the approved slice.
+Use this only for areas touched by the approved slice. It supports focused QA; it is not a mandatory bulk checklist.
 
 Before release, check:
 
@@ -12,3 +12,5 @@ Before release, check:
 - [ ] Existing relevant tests pass
 - [ ] New acceptance criteria are covered
 - [ ] Auth, permissions and privacy still hold where relevant
+
+Run broader checks only when `docs/qa/qa-plan.md` says the changed surface requires them. Record any skipped relevant item and why in the QA report.

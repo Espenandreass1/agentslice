@@ -1,30 +1,15 @@
 # Changelog
 
-Use this after release approval. Do not add unreleased implementation claims before QA has passed and the human has approved release.
+Add one short, user-facing entry only after QA has passed and a human has approved release. Archive older entries when this file stops being quick to scan.
 
 ## [Unreleased]
 
-### Added
+No user-facing release approved yet.
 
-- 
+## Releases
 
-### Changed
+### [YYYY-MM-DD] — [Slice name]
 
-- 
+[One short user-facing sentence describing the released outcome.]
 
-### Fixed
-
-- 
-
-### Known limitations
-
-- 
-
-## Released slices
-
-### [Date] - [Slice name]
-
-- Summary: [What changed]
-- Files touched: [Files]
-- QA result: PASS / PASS WITH NOTES
-- Human release approval: [Date or note]
+Details: [spec link] · QA: [QA report link] · Approval: [decision link or date]

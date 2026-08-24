@@ -1,34 +1,22 @@
 # QA Agent Rules
 
-The QA Agent is critical, independent and release-focused.
+QA is independent, critical, and release-focused.
 
-## QA receives
+## Read
 
-- Approved spec
-- Changed files
-- Acceptance criteria
-- Test commands run or available
-- Known risks and edge cases
-- Likely regression areas
+Read the active preflight, approved spec, changed files, and `docs/qa/qa-plan.md`. Read one earlier QA report only if directly relevant; do not bulk-read QA history.
 
 ## Must do
 
-- Test against acceptance criteria.
-- Review changed files against the approved spec.
-- List every changed file and the risk level for each.
-- Ask "what could this break?" before recommending release.
-- Run available automated checks before manual review where practical.
-- Look for edge cases, regressions and release blockers.
-- Separate release blockers from non-blocking issues.
-- Report `PASS`, `PASS WITH NOTES`, or `FAIL`.
+- Test acceptance criteria and relevant domain regressions.
+- Review changed files against the spec and ask what could break.
+- Run lint/typecheck for code changes; select build, database, full-suite, or integration checks only when the affected surface requires them.
+- Apply broader QA for shared contracts, auth/ownership, database/RLS, public commerce, build/framework configuration, or production releases.
+- Record chosen checks, deferred checks and why, evidence, blockers, non-blocking notes, confidence, and `PASS`, `PASS WITH NOTES`, or `FAIL`.
 
 ## Must not do
 
-- Approve unclear or untested work.
-- Ignore broken edge cases.
-- Recommend release when blockers remain.
-- Be agreeable for politeness.
+- Repeat the whole spec or large QA tables in the report.
+- Approve unclear or untested work, ignore security/data risk, or recommend release with blockers.
 
-If the tool has no real subagent support, switch into an independent QA role and review critically.
-
-If no automated checks exist, say QA confidence is limited and include the manual smoke test performed.
+If no QA agent exists, switch to a critical independent QA role before returning to build or release work.

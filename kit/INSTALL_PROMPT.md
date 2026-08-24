@@ -1,109 +1,37 @@
 You are starting or resuming the AgentSlice workflow in this project.
 
-Operate in planning-only mode until I clearly approve both a slice and a build spec. Accept natural approval language such as "approve", "approved", "yes, go", "go for it", "looks good", or equivalent. If my approval is ambiguous, ask me to confirm before editing application code.
+Follow `AGENT_RULES.md`; `docs/planning/workflow-state.md` is the only source of truth for active phase and approval fields. This is planning-only until I explicitly approve both a slice and a build spec.
 
-At the start of every new conversation, every new slice, and every resume after context reset, re-read:
+At every start, resume, or phase change, read only:
 
-- AGENT_RULES.md
-- docs/planning/workflow-state.md
-- docs/product/vision.md
-- docs/engineering/tech-stack.md
-- docs/planning/current-slice.md
-- docs/planning/next-slices.md
-- docs/planning/decisions.md
+- `AGENT_RULES.md`
+- `docs/planning/active-context.md`
+- `docs/planning/workflow-state.md`
+- `docs/planning/current-slice.md`
 
-First, run a workspace sanity check:
+For planning, then read `docs/product/vision.md`, `docs/engineering/tech-stack.md`, and live `docs/planning/next-slices.md`. Do not bulk-read decisions, specs, QA reports, changelogs, release notes, or archives. If history is needed, use `docs/archive/README.md` and targeted search.
 
-1. Inspect the project root.
-2. Decide whether this folder appears to be:
-   - the real software project where we should work, or
-   - only the unzipped AgentSlice folder.
-3. If the folder appears to contain only kit files and no app/project files, stop and ask:
-   "Is this the actual project folder you want to build in, or did you open the downloaded kit folder by mistake?"
-4. If I say this is the real project folder for a new project, continue.
-5. If I say it is only the downloaded kit folder, do not continue intake here. Tell me to:
-   - open my real project folder in the AI coding tool,
-   - move or copy the contents of this kit folder into that project root,
-   - then paste this prompt again.
-6. If I give you an absolute path to the real project and your tool can safely copy files there, offer to copy the kit contents into that project root, asking before overwriting anything. After copying, stop and tell me to open that real project folder and paste this prompt again.
+First run a workspace sanity check:
 
-Verify these workflow files exist:
-
-- docs/planning/workflow-state.md
-- AGENT_RULES.md
-- docs/product/vision.md
-- docs/planning/current-slice.md
-- docs/planning/next-slices.md
-- docs/specs/spec-template.md
-- docs/qa/qa-report-template.md
-- docs/engineering/coding-rules.md
-- docs/engineering/tech-stack.md
-- AGENTS.md or CLAUDE.md or .cursor/rules/ai-coding-workflow.mdc or .windsurf/rules/ai-coding-workflow.md
-
-If an expected file is missing, report it and continue with the files that exist. Do not create implementation code.
+1. Inspect the project root and decide whether it is the software project or only an unzipped AgentSlice folder.
+2. If it is only the kit, stop and ask me to open the real project, copy the kit there, then paste this prompt again.
+3. If I provide a real project path and you can safely copy there, offer to copy the kit without overwriting anything; then stop and ask me to reopen that project.
+4. Verify these files exist: `AGENT_RULES.md`, `docs/planning/active-context.md`, `docs/planning/workflow-state.md`, `docs/planning/current-slice.md`, `docs/planning/next-slices.md`, `docs/specs/spec-template.md`, `docs/qa/qa-plan.md`, `docs/qa/qa-report-template.md`, `docs/engineering/coding-rules.md`, and one tool rule file (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/ai-coding-workflow.mdc`, or `.windsurf/rules/ai-coding-workflow.md`). Report missing workflow files and continue safely; do not create implementation code.
 
 Hard rules:
 
-- Do not build product features yet.
-- Do not write implementation code.
-- Do not modify application code during intake.
-- Do not edit any file outside AgentSlice planning files until a slice and spec are approved.
-- Treat clear approval in normal language as approval. If a short reply like "yes", "ok", or "go" could refer to something other than the current slice or spec, ask a quick confirmation before writing code.
-- Every slice must be small enough for a human to review in under 5 minutes.
-- Read docs/planning/workflow-state.md before acting.
-- Use docs/planning/workflow-state.md as the durable source of truth.
-- Keep the Project Context Bible in docs/planning/workflow-state.md current.
-- Read the valid phases from docs/planning/workflow-state.md.
-- Default to minimal mode unless I ask for full mode.
-- Ask a maximum of 5 product questions.
-- If the tech stack is missing or unclear, ask whether I want a simple recommendation. If yes, use the bundled pick-tech-stack instructions before proposing slices.
-- If `pick-tech-stack` is not installed as a runtime skill in this tool, do not pretend it is. Instead, read `.agents/skills/pick-tech-stack/SKILL.md` or `.claude/skills/pick-tech-stack/SKILL.md` if available. If neither file can be read, make a simple recommendation yourself and say you used the fallback.
-- Make slice planning adaptive:
-  - Tiny project or very small idea: propose 1 recommended slice.
-  - Small app or normal MVP: propose 2-3 slice options.
-  - Larger product: propose 3-5 slice options.
-- Stop at slice approval. Do not draft a spec until I approve a slice.
-- Before implementation, the approved spec must list likely touched files, what will not change, estimated complexity, regression risks, acceptance criteria, and QA checks.
+- Preserve the four gates: human slice approval; human spec approval; independent QA `PASS`/`PASS WITH NOTES`; human release approval.
+- Do not write implementation code without both approvals, or when likely touched areas are absent from the approved spec.
+- Do not deploy after `FAIL` or without human release approval.
+- The quick-fix lane never bypasses gates or security requirements.
+- Keep `active-context.md` under 180 lines, `next-slices.md` to one to three living candidates, and active documents short. Archive closed history using `docs/archive/README.md`.
+- Ask at most five product questions and default to minimal mode.
+- A small spec and QA report should each be about 120 lines or fewer unless risk justifies more.
 
 Start now:
 
-1. Set docs/planning/workflow-state.md to:
-   - Current phase: INTAKE
-   - Current approved slice: None
-   - Spec approved: No
-   - QA status: Not started
-   - Release approved: No
-   - Next required action: Ask up to 5 product intake questions.
-   - Project Context Bible: update only with confirmed context from my answers.
-2. Ask me only the questions needed, up to 5:
-   - What are you trying to build?
-   - Who is it for?
-   - What problem should it solve?
-   - What should the first useful version do?
-   - What should it not do yet?
-3. Tell me rough answers are fine.
-4. After I answer, summarize my answers.
-5. Classify the project size as tiny, small, or larger. Explain the classification in one sentence.
-6. Create or update only the useful planning files:
-   - docs/product/vision.md
-   - docs/planning/open-questions.md, only if there are meaningful unknowns
-   - docs/planning/next-slices.md
-   - ROADMAP_SLICES.md, only as a lightweight view of the next 3-5 slices when useful
-   - docs/planning/workflow-state.md
-   - docs/planning/decisions.md, when a decision has actually been made
-7. If the stack is unknown, offer one simple stack recommendation and ask for approval before writing it into docs/engineering/tech-stack.md.
-8. Propose the adaptive number of first slices.
-9. Recommend one slice.
-10. Set workflow phase to SLICE_OPTIONS.
-11. Stop and ask me to approve, reject, or adjust the recommended slice.
-
-Hard stops:
-
-- If there is no approved slice, do not write implementation code.
-- If there is no approved spec, do not write implementation code.
-- If Spec approved is not Yes, do not write implementation code.
-- If likely touched files are not listed, do not write implementation code.
-- If QA result is FAIL, do not recommend release.
-- If release is not approved by me, do not deploy.
-
-Begin now by checking the workflow files and asking the intake questions. Do not build.
+1. Set `workflow-state.md` to `INTAKE`, no approved slice/spec/release, `QA status: Not started`, and the next intake action.
+2. Ask only the missing questions, up to five: what to build, who it is for, problem, first useful version, and not-yet scope. Rough answers are fine.
+3. Summarize confirmed answers, then update `vision.md`, `active-context.md`, useful open questions, and one to three live candidates in `next-slices.md`.
+4. If the stack is unclear, offer one recommendation and ask approval before recording it in `tech-stack.md`.
+5. Recommend one slice, set phase to `SLICE_OPTIONS`, and stop for my explicit slice approval. Do not draft a full spec or build yet.

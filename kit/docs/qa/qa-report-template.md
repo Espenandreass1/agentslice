@@ -1,73 +1,36 @@
 # QA Report: [Slice name]
 
+Keep a small report to about 120 lines or fewer. If risk requires more, state why. Link to the approved spec and evidence; do not repeat the spec or large QA tables.
+
 ## Result
 
 PASS / PASS WITH NOTES / FAIL
 
-## Summary
+## Evidence reviewed
 
-## Spec checked
+- Approved spec: [Path]
+- Changed files: [Command, commit, diff, or concise list]
+- Earlier QA report: [Path, only if directly relevant]
 
-## Files touched
+## Checks selected
 
-- [File]
+- [Check] — [Result and why it was relevant]
 
-## Checks run
+## Checks deferred
 
-- [Check]
+- [Check] — [Why it was not needed or could not run; residual risk]
 
-## Checks skipped
+## Acceptance criteria
 
-- [Skipped check and reason]
-
-## Inputs reviewed
-
-- Approved spec:
-- Changed files:
-- Acceptance criteria:
-- Test commands:
-- Known risks:
-
-## Acceptance criteria result
-
-- [ ] [Criterion]
-
-## What could break?
-
-- [Potential regression]
-
-## Regression test suggestions
-
-- [Manual or automated follow-up check]
+- [ ] [Criterion reference] — [Pass/fail evidence]
 
 ## Findings
 
-### Release blockers
+- Release blockers: [None or concise list]
+- Non-blocking notes: [None or concise list]
+- Regression/security concern: [None or concise list]
 
-- [Blocker]
+## QA confidence and recommendation
 
-### Non-blocking issues
-
-- [Issue]
-
-## Regression notes
-
-- [Note]
-
-## File-by-file notes
-
-| File | Change summary | Risk | QA note |
-|---|---|---|---|
-| [File] | [Summary] | [Low/Medium/High] | [Note] |
-
-## QA confidence
-
-High / Medium / Low, with reason.
-
-## Recommendation
-
-[Release / Do not release yet]
-
-## Required fixes
-
-- [Fix]
+[High/Medium/Low and why.]
+[Release / Do not release yet.]

@@ -1,34 +1,16 @@
-# Decisions
+# Active Decisions and Constraints
 
-Append important product and technical decisions here as they happen.
+Keep only decisions and constraints that still shape active work. Move closed or superseded entries to a dated folder and index them in `docs/archive/README.md`.
 
-Agents should append a decision when the human approves:
+## Active records
 
-- Tech stack
-- Product slice
-- Build spec
-- Release
-- Meaningful scope change
-- New dependency or external service
+### [YYYY-MM-DD] [Decision or constraint]
 
-## Decision template
+- Decision/constraint: [What currently applies.]
+- Why: [Short reason or approval reference.]
+- Affects: [Active slice, system area, or release.]
+- Source: [Approval, spec, or external requirement link.]
 
-### [YYYY-MM-DD] [Decision title]
+## Update rule
 
-**Decision:**  
-[What was decided]
-
-**Context:**  
-[Why the decision was needed]
-
-**Alternatives considered:**
-
-- [Alternative]
-
-**Trade-offs accepted:**
-
-- [Trade-off]
-
-**Follow-up:**
-
-- [Follow-up, if any]
+Record a new entry only when it changes active scope, architecture, security, ownership, data handling, commerce, or an approved release decision. Link to the source; do not duplicate its full content.

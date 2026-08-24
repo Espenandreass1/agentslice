@@ -40,7 +40,7 @@ AI coding agents work better when they know the next step. Without a workflow th
 - **Wandering edits** — the agent expands the task, touches files you didn't ask about, and burns tokens on detours.
 - **Editing without asking** — the agent jumps straight to changes before you've approved a plan.
 
-AgentSlice gives the agent a project-local workflow it actually reads: a tiny set of Markdown files that pin down the phases, the gates, and the next required action so the agent asks first, plans first, and waits for approval before it edits.
+AgentSlice gives the agent a project-local workflow it actually reads: a compact active context plus durable gates and state. It pins down the phases, approvals, and next action without forcing every new session to load old specs, QA reports, and decision history.
 
 ## What's in the kit
 
@@ -48,6 +48,8 @@ AgentSlice gives the agent a project-local workflow it actually reads: a tiny se
 |---|---|
 | `INSTALL_PROMPT.md` | The one prompt you paste into your AI tool to bootstrap the workflow. |
 | `docs/planning/workflow-state.md` | Resumable state file — current phase, approved slice, QA status, next allowed action. |
+| `docs/planning/active-context.md` | Short active product context, constraints, current slice/spec, next gate, QA policy, and near priorities. |
+| `docs/archive/README.md` | Index for preserved historical decisions, slice proposals, state snapshots, and release records. |
 | `.agents/skills/` | Shared planning skills: intake, slice planning, spec, QA gate, release, advance. |
 | `.cursor/rules/` | Project rules for Cursor. |
 | `.claude/skills/` + `CLAUDE.md` | Skills and project memory for Claude Code. |
@@ -74,7 +76,7 @@ Ask → Plan → Approve → Build → QA → Release → Next
 6. **Release.** A release recommendation is written. You approve.
 7. **Next.** The state file advances to the next slice. The loop repeats.
 
-The state lives in `docs/planning/workflow-state.md` so the next agent session resumes from a real checkpoint instead of re-guessing.
+The state and active context live in small separate files, so the next agent session resumes from a real checkpoint instead of re-guessing or loading all historical documents. Historical records remain in dated archives and are read only by index or targeted search.
 
 ## Why this exists
 

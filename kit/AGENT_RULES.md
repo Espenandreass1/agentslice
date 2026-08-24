@@ -1,95 +1,78 @@
 # AgentSlice Agent Rules
 
-These rules are the permanent workflow contract for this project. Re-read this file at the start of every new conversation, every new slice, and every resume after a context reset.
+This is the canonical, permanent workflow contract. It must exist in every AgentSlice project. `docs/planning/workflow-state.md` is the only source of truth for the active phase and approval fields; do not infer either from another document.
 
-AgentSlice is a Markdown workflow kit, not an executable runtime. The gates are not technically enforced, so you must enforce them through your behavior.
+AgentSlice is a Markdown workflow kit, not an executable gatekeeper. Enforce these rules through your behavior and distinguish human approval from technical enforcement.
 
-## Core Rule
+## Required approval gates
 
-You are forbidden from editing application code until both are true:
+Do not change these four gates:
 
-1. A slice has been explicitly approved by the human.
-2. A build spec for that slice has been explicitly approved by the human.
+1. A human approves the slice before a full build spec is written.
+2. A human approves the build spec before implementation begins.
+3. Independent QA returns `PASS` or `PASS WITH NOTES` before a release recommendation.
+4. A human approves the release before deployment or release.
 
-Accept natural approval language such as "approve", "approved", "yes, go", "go for it", "looks good", or equivalent. If the approval could refer to something other than the current slice or spec, ask for quick confirmation before editing application code.
+Natural approval language is valid (`approve`, `approved`, `yes, go`, `go for it`, `looks good`, or equivalent). If it could refer to something other than the current slice, spec, or release, ask for confirmation.
 
-## Read First
+## Progressive context
 
-Before planning, building, QA, release, or resuming work, read:
+At every start, resume, or phase change, read only this active preflight:
 
 - `AGENT_RULES.md`
+- `docs/planning/active-context.md`
 - `docs/planning/workflow-state.md`
-- `docs/product/vision.md`
-- `docs/engineering/tech-stack.md`
 - `docs/planning/current-slice.md`
-- `docs/planning/next-slices.md`
-- `docs/planning/decisions.md`
-- `docs/specs/`
-- `docs/qa/`
-- `docs/release/changelog.md`
 
-## Slice Discipline
+Then add only the context for the current role:
 
-Every slice must be small enough for a human to review in under 5 minutes.
+| Role | Read in addition to the active preflight |
+|---|---|
+| Planning | `docs/product/vision.md`, `docs/engineering/tech-stack.md`, and live `docs/planning/next-slices.md` |
+| Build | The approved spec and `docs/engineering/coding-rules.md` |
+| QA | The approved spec, changed files, `docs/qa/qa-plan.md`, and at most one directly relevant earlier QA report when needed |
+| Release | The current spec, current QA report, and `docs/release/changelog.md` |
 
-Before implementation, every approved slice/spec must state:
+Never bulk-read `docs/specs/`, `docs/qa/`, release documents, decision logs, or archives as preflight. When history is needed, start with `docs/archive/README.md`, then use its links or targeted search to open only the relevant record.
 
-- exact files or areas likely to be touched
-- what will not change
-- expected complexity and rough line-change range
-- acceptance criteria
-- regression risks
-- QA checks
+### Legacy-project fallback
 
-If any scope is ambiguous, ask clarifying questions before proposing or implementing the slice.
+New AgentSlice projects always include `active-context.md`. In an existing project that predates it, preserve the gates and seed this file from the current state, current slice, vision, and tech stack only; do not compensate by bulk-reading history. Follow `docs/agents/migrating-to-active-context.md` and keep old records reachable through the archive index.
 
-## Hard Stops
+## Hard stops
 
 - No approved slice: do not write implementation code.
-- No approved spec: do not write implementation code.
-- `Spec approved` is not `Yes`: do not write implementation code.
-- Changed files are outside the approved spec: stop and ask.
+- No approved spec, or `Spec approved` is not `Yes`: do not write implementation code.
+- The approved spec does not name likely touched files or areas: stop and ask.
+- A needed change falls outside the approved spec: stop and obtain a scope/spec update.
 - QA result is `FAIL`: do not recommend release.
-- Release is not approved by the human: do not deploy.
-- Current phase is unclear: stop and ask what phase to resume from.
+- Release approval is not `Yes`: do not deploy or release.
+- Active phase or approval fields are unclear: stop and ask where to resume.
 
-## Scope Control
+## Quick-fix lane
 
-- Build only the approved slice.
-- Do not expand scope during implementation.
-- Do not rewrite unrelated files.
-- Do not add production dependencies without approval.
-- Do not make broad refactors unless the approved slice is a refactor.
-- Keep facts, assumptions, risks, and recommendations separate.
+Use the quick-fix lane only for a small, reversible correction with a narrow regression surface (normally one or two areas). It may use a compact slice and compact spec, but it never bypasses any of the four gates, scope limits, security review, lint/typecheck, or independent QA.
 
-## Context And Memory
+- A fix already inside an approved spec may be handled as a QA fix and re-tested.
+- A new fix needs explicit slice approval, a short approved spec, QA, and release approval like any other slice.
+- Auth, ownership, database/RLS, payments/commerce, privacy, migrations, shared contracts, or production configuration are never quick-fix shortcuts; apply the relevant broader QA.
 
-Keep `docs/planning/workflow-state.md` updated after every phase change. Keep its Project Context Bible current enough that a new agent conversation can understand the product, non-goals, constraints, active slice, and previous decisions.
+## Scope, QA, and security
 
-Use `docs/planning/decisions.md` for meaningful trade-offs and approvals. Use `docs/release/changelog.md` only after release approval.
+- Build only the approved slice. Do not silently expand scope, refactor unrelated code, or add production dependencies without approval.
+- Keep slices reviewable in under five minutes. A small spec and QA report should each be about 120 lines or fewer; document a risk-based reason when either must be longer.
+- QA is independent: use a separate QA agent where available, otherwise switch to a critical independent QA role.
+- Treat auth, data, ownership, privacy, and commerce risks as release blockers until resolved.
+- QA must state the checks selected, skipped checks and reasons, acceptance-criteria result, findings, and release recommendation. It links to the spec rather than repeating it.
 
-## Bundled Skill Files
+## Active-document updates and archive
 
-Some tools expose skills as installed commands. Other tools only see the bundled skill files in the repository.
+- Update `workflow-state.md` after each phase change. Keep it limited to active phase, approval fields, next action, valid phases, and hard stops.
+- Update `active-context.md` when confirmed product context, active constraints, current slice/spec, next gate, QA policy, or nearest priorities change. Keep it at 180 lines or fewer.
+- Keep `next-slices.md` to one to three living candidates; keep `decisions.md` to active decisions and constraints; add one short user-facing entry to `changelog.md` per release.
+- Do not create separate release notes for an internal or local-first release unless there is an external audience.
+- Move closed material to a dated archive; never delete history or leave a link broken. Follow `docs/archive/README.md`.
 
-When an AgentSlice instruction names a skill:
+## Bundled skills
 
-1. Use the installed/runtime skill if the tool makes it available.
-2. If it is not installed, read the bundled file at `.agents/skills/<skill-name>/SKILL.md` or `.claude/skills/<skill-name>/SKILL.md`.
-3. If neither file is readable, use your general capability as a fallback and say that the named skill was not available.
-
-Never claim that you used a skill that was not installed or read.
-
-## QA Behavior
-
-QA must answer:
-
-- what changed
-- which files were touched
-- what could break
-- which checks were run
-- which checks were skipped and why
-- whether acceptance criteria passed
-- whether release is recommended
-
-If no separate QA subagent exists, switch into an independent QA role and review the work critically before returning to build or release mode.
+If an AgentSlice instruction names a skill, use the runtime skill when available. Otherwise read `.agents/skills/<skill-name>/SKILL.md` or `.claude/skills/<skill-name>/SKILL.md`; if neither is available, use a transparent general-capability fallback. Do not claim to have used an unavailable skill.

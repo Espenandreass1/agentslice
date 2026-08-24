@@ -1,11 +1,11 @@
 # Deployment Checklist
 
-- [ ] Spec approved
-- [ ] Build completed
-- [ ] QA result is PASS or PASS WITH NOTES
-- [ ] Release blockers resolved
-- [ ] `docs/planning/workflow-state.md` is in HUMAN_RELEASE_APPROVAL
-- [ ] Human release approval received
-- [ ] Changelog updated
-- [ ] Rollback plan understood
-- [ ] Post-release monitoring defined
+- [ ] Current slice and spec were explicitly approved.
+- [ ] QA result is `PASS` or `PASS WITH NOTES`; blockers are resolved.
+- [ ] QA report identifies selected and deferred checks with reasons.
+- [ ] Relevant build, database, migration, framework, commerce, auth/ownership, and production checks ran or have an explicit risk decision.
+- [ ] `workflow-state.md` is in `HUMAN_RELEASE_APPROVAL`.
+- [ ] Human release approval received.
+- [ ] One short user-facing changelog entry is ready.
+- [ ] External release notes are prepared only if an external audience exists.
+- [ ] Rollback and post-release monitoring are understood when relevant.

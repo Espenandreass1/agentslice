@@ -1,37 +1,28 @@
 # QA Plan
 
-QA should be proportional to the approved slice and grounded in real checks where possible.
+QA is independent and must return `PASS`, `PASS WITH NOTES`, or `FAIL`. Use focused acceptance tests and relevant domain regressions by default; link to the spec rather than restating it.
 
-## Default QA areas
+## Baseline for code changes
 
-- Approved spec
-- Changed files
-- Acceptance criteria
-- Available test commands
-- Known risks
-- Main user flow
-- Edge cases
-- Error handling
-- Regression checks
-- Security/privacy where relevant
-- Performance where relevant
+- Run focused tests for acceptance criteria and the changed domain.
+- Run lint and typecheck when the project provides them.
+- Review changed files against the approved spec and ask what could break.
+- Record selected checks, skipped checks, and the reason for every deferral.
 
-## Useful commands to look for
+## Require broader checks when the change affects
 
-- Node: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`
-- Python: `pytest`, project-specific lint/type commands
-- Framework smoke checks: local app route, API endpoint, CLI command, or manual browser flow
+- shared contracts, public APIs, or cross-feature components;
+- auth, identity, permissions, tenant/data ownership, privacy, or security;
+- database schema, migrations, RLS, persistence, or data integrity;
+- public payments, billing, checkout, pricing, or commerce;
+- build tooling, framework configuration, deployment configuration, or a production release.
 
-If no automated checks exist, state that clearly and run a focused manual smoke test.
+For these surfaces, run the relevant full suite, build, database checks, migration checks, integration tests, or production-safe verification available in the project. A missing check must be called out as a risk, not silently skipped.
 
-## Optional CI
+## Select only relevant checks
 
-`docs/qa/github-actions-ci-template.yml` is a starting point for GitHub Actions. Copy it into `.github/workflows/ci.yml` only after the stack is confirmed.
+- Build only when the affected surface, deployment, framework, or production release warrants it.
+- Run database checks only for database/RLS/migration/data changes.
+- If no automated check exists, perform a focused manual smoke test and state the confidence limit.
 
-## Required QA result
-
-Each QA run must return one of:
-
-- PASS
-- PASS WITH NOTES
-- FAIL
+Optional CI starter: `docs/qa/github-actions-ci-template.yml` after the stack is confirmed.

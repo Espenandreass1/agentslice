@@ -1,67 +1,26 @@
 # Current Slice
 
-## Slice name
+Keep only the current slice snapshot here; the approved spec holds implementation detail.
 
-[Name]
+## Identity and status
 
-## Status
+- Slice: [Name]
+- Status: Not started / Slice approved / Spec drafted / Spec approved / Building / QA / Fixes / Ready for release / Released
+- Approved spec: [Path or `None`]
 
-Not started / Slice approved / Spec drafted / Spec approved / Building / QA / Fixes / Ready for release / Released
+## Outcome and scope boundary
 
-## Why this slice matters
+- Why it matters: [Short product reason.]
+- Included: [Short list.]
+- Not included: [Short list.]
+- Likely areas: [Paths, modules, routes, or data areas.]
+- Must not change: [Explicit boundary.]
 
-[Product reason]
+## Gate snapshot
 
-## Scope
+- Slice approval: Yes / No
+- Spec approval: Yes / No
+- QA status: Not started / PASS / PASS WITH NOTES / FAIL
+- Release status: Not ready / Awaiting human approval / Released
 
-Included:
-
-- [Item]
-
-Not included:
-
-- [Item]
-
-## Likely files or areas touched
-
-- [Exact file, route, component, module, API, database table, or docs area]
-
-## Files or areas that must not change
-
-- [Out-of-scope file or area]
-
-## Size limit
-
-Target review size: under 5 minutes.
-
-Estimated complexity: Tiny / Small / Medium / Large
-
-Estimated change range: [rough line or file count range]
-
-## Acceptance criteria
-
-- [Criterion]
-
-## Regression risks
-
-- [What could break because of this slice]
-
-## QA checks
-
-- [Manual or automated check]
-
-## Blockers
-
-- [Blocker]
-
-## QA status
-
-Not started / PASS / PASS WITH NOTES / FAIL
-
-## Release status
-
-Not ready / Awaiting human approval / Released
-
-## Workflow state
-
-Update `docs/planning/workflow-state.md` whenever this slice moves to a new phase.
+`workflow-state.md` remains the only source of truth for active phase and approval fields; update it whenever this slice moves phase.

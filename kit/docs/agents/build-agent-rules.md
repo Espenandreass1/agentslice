@@ -2,26 +2,21 @@
 
 The Build Agent implements only the approved spec for the approved slice.
 
+## Read
+
+Read the active preflight, then only the approved spec and `docs/engineering/coding-rules.md`. Open historical material only through the archive index when a concrete implementation question requires it.
+
 ## Must do
 
-- Read `docs/planning/workflow-state.md` before coding.
-- Read `AGENT_RULES.md` before coding.
-- Confirm there is an approved slice.
-- Confirm `Spec approved: Yes`.
-- Confirm the approved spec lists likely touched files or areas.
-- Follow the approved spec, chosen tech stack and coding rules.
-- Keep scope controlled.
-- Document important decisions.
-- Report changed files and checks run.
+- Confirm an approved slice, `Spec approved: Yes`, and named likely touched areas in the spec.
+- Build only the approved scope; stop for a scope/spec update before touching an unlisted area.
+- Report changed files, targeted checks, deviations, and any active-context change.
+- Keep auth, ownership, data, privacy, and commerce safeguards intact.
 
 ## Must not do
 
-- Write implementation code without an approved slice.
-- Write implementation code without an approved spec.
-- Write implementation code when likely touched files or areas are missing from the spec.
-- Expand scope silently.
-- Make product decisions without escalation.
-- Hide deviations from the spec.
-- Add dependencies or services without approval.
+- Implement without the two human approvals.
+- Expand scope, add dependencies/services, or refactor unrelated work without approval.
+- Treat a quick fix as a gate bypass.
 
-If the state file does not allow build work, stop and ask for the missing approval.
+If the state file does not permit build work, stop and ask for the missing approval.

@@ -1,39 +1,22 @@
 # Coding Rules
 
-Use these as default rules until the project has stronger local conventions.
+Use these defaults until the project has stronger local conventions.
 
-## Defaults
+## Scope and safety
 
-- Keep the first version boring and easy to change.
-- Prefer explicit names, small functions and clear data flow.
-- Build only the approved slice.
-- Do not add production dependencies without approval.
-- Do not introduce auth, billing, queues, background jobs or external services unless the spec requires them.
-- Do not refactor unrelated code while implementing a slice.
+- Build only the approved spec; do not add production dependencies or unrelated refactors without approval.
+- Prefer explicit names, small functions, clear data flow, existing patterns, and reversible changes.
+- Validate inputs at boundaries; avoid hardcoded tenant/user/project IDs.
+- Treat auth, permissions, data ownership, privacy, data loss, and payments as release blockers, not polish.
 
-## Frontend
+## User-facing work
 
-- Keep components focused on one job.
-- Separate data loading, state handling and presentational UI when the file starts getting hard to scan.
-- Handle loading, empty and error states for user-facing flows.
-- Use existing design system/components before inventing new ones.
+- Handle loading, empty, error, and permission states where applicable.
+- Use existing design components before inventing new ones.
 
-## Backend and Data
+## Checks
 
-- Validate inputs at the boundary.
-- Keep database changes explicit and reversible where possible.
-- Avoid hardcoded tenant/user/project IDs.
-- Treat auth, permissions and data ownership as release blockers, not polish.
-
-## Tests and Checks
-
-- If behavior changes, add or update a focused test where the project has a test setup.
-- If no test setup exists, write a short manual smoke test in the QA report.
-- Run the smallest useful check first, then broader checks before release.
-
-## Anti-patterns
-
-- Expanding scope because it is "easy."
-- Rewriting working code to match a preference.
-- Hiding deviations from the approved spec.
-- Shipping with unclear auth, data loss, payment or privacy risk.
+- Add or update focused tests where the project has a test setup.
+- For code changes, run lint and typecheck when available.
+- Use full-suite, build, database, migration, integration, or production checks only when the QA policy says the changed surface requires them.
+- If automation is absent, document a focused manual smoke test in the QA report.

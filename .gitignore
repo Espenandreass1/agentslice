@@ -6,6 +6,8 @@ product-page-copy/
 store-assets/
 strategy/
 .claude/
+!kit/.claude/
+!kit/.claude/**
 
 # System files
 .DS_Store

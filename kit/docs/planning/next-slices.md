@@ -1,33 +1,19 @@
 # Next Slices
 
-Use this as the lightweight planning surface. Do not create a heavy roadmap unless the project genuinely needs one.
+This is the live planning queue, not a roadmap or history. Keep only one to three candidates here. Archive replaced proposals through `docs/archive/README.md`.
 
-## Project size
+## Living candidates
 
-Tiny / small / larger
-
-## Candidate slices
-
-For tiny projects, one recommended slice is enough. For small projects, use 2-3 options. Use 3-5 options only when scope is larger or prioritization is unclear.
-
-Every slice must be small enough for a human to review in under 5 minutes. If a slice is too large, split it before asking for approval.
-
-| Slice | Problem | Value | Likely files/areas | Not included | Risk | Priority |
-|---|---|---|---|---|---|---|
-| [Name] | [Problem] | [Value] | [Files/areas] | [Out of scope] | [Risk] | [P1/P2/P3] |
+| Slice | User value | Likely areas | Main risk | Priority |
+|---|---|---|---|---|
+| [Candidate 1] | [Value] | [Areas] | [Risk] | P1 |
+| [Candidate 2, if needed] | [Value] | [Areas] | [Risk] | P2 |
+| [Candidate 3, if needed] | [Value] | [Areas] | [Risk] | P3 |
 
 ## Recommended next slice
 
-[Name and rationale]
+[Name and one-sentence rationale.]
 
-## Next 3-5 slice roadmap
+## Rule
 
-Keep this aligned with `ROADMAP_SLICES.md` when that file is useful.
-
-- [Slice 1]
-- [Slice 2]
-- [Slice 3]
-
-## Parked ideas
-
-- [Idea]
+Only an explicitly approved current slice may receive a full spec or implementation. Do not treat this queue as approval.
