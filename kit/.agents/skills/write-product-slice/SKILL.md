@@ -14,6 +14,7 @@ Read the active preflight, then `vision.md`, `tech-stack.md`, and live `next-sli
 - Do not build or write a full implementation spec until human slice approval.
 - Keep candidates small enough for human review in under five minutes.
 - Keep exactly one to three living candidates in `next-slices.md`; archive replaced proposals instead of accumulating them.
+- Do not parallelize this sequential planning step.
 
 ## Steps
 
@@ -21,9 +22,9 @@ Read the active preflight, then `vision.md`, `tech-stack.md`, and live `next-sli
 2. Summarize active product context and constraints without duplicating source documents.
 3. Propose one to three candidates with value, likely areas, non-scope, risks, and priority.
 4. Recommend the smallest visible-value slice and state its acceptance criteria, rough size, and must-not-change areas.
-5. Update `next-slices.md`, `active-context.md`, and phase `SLICE_OPTIONS`.
+5. Update `next-slices.md`, `active-context.md`, phase `SLICE_OPTIONS`, and checkpoint.
 6. Stop for explicit human slice approval.
 
 ## Output
 
-Give concise options, one recommendation, and the requested approval. A quick fix is still a fully gated slice.
+Give concise options, one recommendation, and the requested approval. A quick fix is still a fully gated slice; do not repeat the active context or historical proposals.

@@ -14,3 +14,5 @@ Before release, check:
 - [ ] Auth, permissions and privacy still hold where relevant
 
 Run broader checks only when `docs/qa/qa-plan.md` says the changed surface requires them. Record any skipped relevant item and why in the QA report.
+
+Record whether the full suite was required and the exact trigger in the QA report; do not run it merely from habit.

@@ -19,6 +19,7 @@ Use this as the short, active memory for a start or resume. Keep it under 180 li
 - Slice: [Name and status; details in `current-slice.md`.]
 - Spec: [Path and approval status; `None` until drafted.]
 - Current QA report: [Path and result; `None` until QA starts.]
+- Active checkpoint: `docs/planning/checkpoint.md` [Status; this is a handoff summary, not state truth.]
 - Scope boundary: [One short statement, or `No approved scope yet`.]
 
 ## Next gate
@@ -44,3 +45,4 @@ Use this as the short, active memory for a start or resume. Keep it under 180 li
 - Stack detail: `docs/engineering/tech-stack.md`
 - Active decisions: `docs/planning/decisions.md`
 - Historical index: `docs/archive/README.md`
+- Handoff and telemetry: `docs/planning/checkpoint.md`

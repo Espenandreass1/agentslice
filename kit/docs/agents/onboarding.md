@@ -2,7 +2,7 @@
 
 ## Start with the active preflight
 
-Read `AGENT_RULES.md`, `docs/planning/active-context.md`, `docs/planning/workflow-state.md`, and `docs/planning/current-slice.md`. The state file alone controls the phase and approval fields.
+Read `AGENT_RULES.md`, `docs/planning/active-context.md`, `docs/planning/workflow-state.md`, `docs/planning/current-slice.md`, and `docs/planning/checkpoint.md`. The checkpoint is a compact handoff summary; the state file alone controls the phase and approval fields.
 
 ## Add only your role context
 
@@ -24,5 +24,12 @@ The workflow remains: slice approval → spec approval → independent QA `PASS`
 - `next-slices.md`: one to three living candidates.
 - `decisions.md`: active decisions/constraints only.
 - `changelog.md`: one short user-facing release entry.
+- `checkpoint.md`: under 80 lines; authoritative links, checks, risks, next action, and per-slice telemetry. Archive it when superseded.
+
+## Efficient execution
+
+- Focused acceptance tests and relevant domain regressions are the QA default. A full suite needs a stated trigger in `qa-plan.md`.
+- Do not parallelize by default; independent QA/review is the normal exception.
+- Report passed commands as command plus result. For failures, show only the relevant excerpt, impact, and next action.
 
 See `migrating-to-active-context.md` for existing projects.

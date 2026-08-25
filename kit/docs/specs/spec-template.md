@@ -36,7 +36,8 @@ Do not implement until this is explicitly approved and `workflow-state.md` says 
 
 - Approach or constraints: [Existing patterns and non-obvious choices.]
 - QA checks: [Focused checks plus any required broader check.]
-- Why broader checks are required or deferred: [When applicable.]
+- Full-suite decision: [Not required / Required; exact trigger and check, or why focused scope is sufficient.]
+- Why broader checks are deferred: [Only when applicable; state residual risk.]
 
 ## Approval needed
 

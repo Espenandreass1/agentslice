@@ -49,6 +49,7 @@ AgentSlice gives the agent a project-local workflow it actually reads: a compact
 | `INSTALL_PROMPT.md` | The one prompt you paste into your AI tool to bootstrap the workflow. |
 | `docs/planning/workflow-state.md` | Resumable state file — current phase, approved slice, QA status, next allowed action. |
 | `docs/planning/active-context.md` | Short active product context, constraints, current slice/spec, next gate, QA policy, and near priorities. |
+| `docs/planning/checkpoint.md` | Compact handoff with authoritative links, checks, risks, next action, and per-slice efficiency estimate. |
 | `docs/archive/README.md` | Index for preserved historical decisions, slice proposals, state snapshots, and release records. |
 | `.agents/skills/` | Shared planning skills: intake, slice planning, spec, QA gate, release, advance. |
 | `.cursor/rules/` | Project rules for Cursor. |
@@ -72,11 +73,11 @@ Ask → Plan → Approve → Build → QA → Release → Next
 2. **Plan.** It proposes a first *slice* — the smallest end-to-end vertical you can ship.
 3. **Approve.** You approve, reject, or adjust the slice. The agent waits.
 4. **Build.** Only after approval does the agent write code.
-5. **QA.** The agent (or a QA subagent, where supported) checks the work and reports PASS / PASS WITH NOTES / FAIL.
+5. **QA.** An independent QA role checks the work and reports PASS / PASS WITH NOTES / FAIL. Focused acceptance/domain regression is standard; a full suite needs a stated risk trigger.
 6. **Release.** A release recommendation is written. You approve.
 7. **Next.** The state file advances to the next slice. The loop repeats.
 
-The state and active context live in small separate files, so the next agent session resumes from a real checkpoint instead of re-guessing or loading all historical documents. Historical records remain in dated archives and are read only by index or targeted search.
+The state, active context, and compact handoff checkpoint live in small separate files, so the next agent session resumes from current facts instead of re-guessing or loading historical documents. At a human-approved gate, superseded snapshots move to dated archives with an index; nothing is deleted. AgentSlice avoids parallel subagents unless work has a clear independent benefit—independent QA/review is the normal exception.
 
 ## Why this exists
 

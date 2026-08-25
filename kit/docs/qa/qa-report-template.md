@@ -12,6 +12,13 @@ PASS / PASS WITH NOTES / FAIL
 - Changed files: [Command, commit, diff, or concise list]
 - Earlier QA report: [Path, only if directly relevant]
 
+## Test scope decision
+
+- Default scope: [Focused acceptance + relevant domain regression / other]
+- Full suite: [Not required / Required and run / Required but deferred]
+- Reason: [Exact changed-surface trigger, or why focused scope was sufficient]
+- Test executions: [Number and purpose; use suite test count too when available]
+
 ## Checks selected
 
 - [Check] — [Result and why it was relevant]

@@ -48,6 +48,7 @@ The value is persistent workflow structure: project context, approval gates, QA 
 - `docs/planning/next-slices.md`: candidate slices
 - `ROADMAP_SLICES.md`: human-readable next-slice view
 - `docs/planning/current-slice.md`: approved/current slice
+- `docs/planning/checkpoint.md`: compact handoff, evidence pointers, risk, and per-slice efficiency estimate
 - `docs/archive/README.md`: targeted history index and migration routine
 - `docs/specs/spec-template.md`: adaptive build spec template
 - `docs/qa/qa-report-template.md`: QA result template
@@ -67,4 +68,4 @@ Do not start implementation until a slice and spec are clearly approved. Natural
 
 ## Context and history
 
-At startup, agents read only `AGENT_RULES.md`, `active-context.md`, `workflow-state.md`, and `current-slice.md`. Each role then adds only its immediate inputs. Specs, QA reports, releases, decisions, and archives are opened through direct links or the archive index for a concrete need—not as bulk preflight. See `docs/agents/migrating-to-active-context.md` when upgrading an existing project.
+At startup, agents read only `AGENT_RULES.md`, `active-context.md`, `workflow-state.md`, `current-slice.md`, and the short active checkpoint. Each role then adds only its immediate inputs. Specs, QA reports, releases, decisions, and archives are opened through direct links or the archive index for a concrete need—not as bulk preflight. Checkpoints preserve handoff/telemetry per slice and are archived when superseded. See `docs/agents/migrating-to-active-context.md` when upgrading an existing project.

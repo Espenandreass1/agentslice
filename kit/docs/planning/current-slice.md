@@ -7,6 +7,7 @@ Keep only the current slice snapshot here; the approved spec holds implementatio
 - Slice: [Name]
 - Status: Not started / Slice approved / Spec drafted / Spec approved / Building / QA / Fixes / Ready for release / Released
 - Approved spec: [Path or `None`]
+- Current checkpoint: `docs/planning/checkpoint.md`
 
 ## Outcome and scope boundary
 

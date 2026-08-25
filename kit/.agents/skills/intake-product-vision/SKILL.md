@@ -9,11 +9,12 @@ description: Use on first run or when active product context is missing. Asks up
 
 - Do not write implementation code, approve a slice, or draft a full spec.
 - Ask at most five questions and default to minimal mode.
-- Preserve the four gates in `AGENT_RULES.md`; update `workflow-state.md` after phase changes.
+- Preserve the four gates in `AGENT_RULES.md`; update `workflow-state.md` and checkpoint after phase changes.
+- Do not parallelize routine intake.
 
 ## Read
 
-Read the active preflight: `AGENT_RULES.md`, `active-context.md`, `workflow-state.md`, and `current-slice.md`. As planning context, read `vision.md`, `tech-stack.md`, and live `next-slices.md`. Read an open question or archived record only when the active context points to it or a concrete question requires it.
+Read the active preflight: `AGENT_RULES.md`, `active-context.md`, `workflow-state.md`, `current-slice.md`, and `checkpoint.md`. As planning context, read `vision.md`, `tech-stack.md`, and live `next-slices.md`. Read an open question or archived record only when the active context points to it or a concrete question requires it.
 
 ## Steps
 
@@ -23,8 +24,8 @@ Read the active preflight: `AGENT_RULES.md`, `active-context.md`, `workflow-stat
 4. Update `vision.md` and the confirmed summary, constraints, next gate, and nearest priorities in `active-context.md`.
 5. If the stack is unclear, offer `pick-tech-stack`; do not record a final stack without human approval.
 6. Capture meaningful active unknowns only when needed.
-7. Propose one to three living candidates in `next-slices.md`, recommend one, set `SLICE_OPTIONS`, and stop for slice approval.
+7. Propose one to three living candidates in `next-slices.md`, recommend one, set `SLICE_OPTIONS`, refresh the checkpoint, and stop for slice approval.
 
 ## Output
 
-State the confirmed context, one-to-three options, recommended slice, and explicit approval needed. Do not create a heavy roadmap or historical log.
+State the confirmed context, one-to-three options, recommended slice, and explicit approval needed. Do not create a heavy roadmap, historical log, or repeat the active context.

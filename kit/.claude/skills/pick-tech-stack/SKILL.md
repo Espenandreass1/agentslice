@@ -10,6 +10,7 @@ description: Use when the project has no confirmed stack. Makes one pragmatic re
 - Do not install dependencies, create application code, or create CI files.
 - Recommend one default stack, not a long menu.
 - Ask for human approval before updating `tech-stack.md`; keep only the active decision in `decisions.md`.
+- Do not parallelize this decision.
 
 ## Read
 
@@ -26,4 +27,4 @@ Prefer the fewest moving parts. Avoid custom auth, microservices, Kubernetes, mu
 
 ## Output
 
-Give the recommended stack, short rationale, trade-offs, and an explicit approval request. After approval, update `tech-stack.md`, `active-context.md`, and the active decision record.
+Give the recommended stack, short rationale, trade-offs, and an explicit approval request. After approval, update `tech-stack.md`, `active-context.md`, the active decision record, and checkpoint; archive superseded decisions through the index when applicable.

@@ -46,4 +46,4 @@ NEXT_SLICE
 
 ## Update rule
 
-After every phase change, update only the six fields in **Current state**. Update `active-context.md` separately when confirmed active context changes.
+After every phase change, update only the six fields in **Current state**. Update `active-context.md` separately when confirmed active context changes, then refresh `checkpoint.md` for the handoff. The checkpoint cannot change phase or approval fields.

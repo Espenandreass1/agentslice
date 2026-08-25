@@ -15,10 +15,15 @@ Read the active preflight, then the approved spec, `coding-rules.md`, changed fi
 - Fix only approved blockers inside the approved spec. A scope/product change requires renewed approval.
 - Run focused checks and preserve auth, ownership, data, privacy, and commerce safeguards.
 - A QA fix is not a release approval and always needs independent re-test.
+- Do not parallelize routine fixes; an independent QA re-test remains required.
 
 ## Steps
 
 1. Summarize the specific blockers and requested fixes.
 2. Implement only those fixes; report files changed and checks run.
-3. Update active context if the active risk or next gate changed.
+3. Update active context and checkpoint with new evidence, residual risk, test-execution count, and next gate.
 4. Set phase `QA_RETEST` and run `run-qa-gate` again.
+
+## Output
+
+Report only changed files, compact command results, unresolved risk, and the independent re-test next action.

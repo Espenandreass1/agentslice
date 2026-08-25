@@ -15,15 +15,16 @@ Read the active preflight, then planning context (`vision.md`, `tech-stack.md`, 
 - Do not implement. Set `Spec approved: No` and phase `SPEC_DRAFTED` after drafting.
 - Keep a small spec to about 120 lines or fewer. If risk requires more, explain why and link to focused supporting material.
 - Name likely touched areas, must-not-change areas, observable acceptance criteria, risks, and QA checks.
+- Do not parallelize this sequential planning step.
 
 ## Steps
 
 1. Convert the approved slice into the smallest concrete spec.
 2. Link to current slice, active context, and only directly relevant decisions instead of copying them.
-3. Choose focused QA checks and identify any trigger for broader QA.
-4. Update `current-slice.md`, `active-context.md`, and `workflow-state.md`.
+3. Choose focused QA checks and identify an exact trigger for a full suite, or record why focused scope is sufficient.
+4. Update `current-slice.md`, `active-context.md`, `workflow-state.md`, and checkpoint.
 5. Stop for explicit human spec approval.
 
 ## Output
 
-Present the compact spec and ask to approve, reject, or adjust it before build starts.
+Present the compact spec and ask to approve, reject, or adjust it before build starts. Link to active context rather than repeat it.
