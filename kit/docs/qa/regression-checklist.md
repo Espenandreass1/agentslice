@@ -1,18 +1,12 @@
 # Regression Checklist
 
-Use this only for areas touched by the approved slice. It supports focused QA; it is not a mandatory bulk checklist.
+Use this only for areas touched by the PR. It supports focused QA; it is not a mandatory bulk checklist.
 
-Before release, check:
+- [ ] The stated user outcome works.
+- [ ] Relevant core flows still work.
+- [ ] No obvious navigation or UI regression in touched areas.
+- [ ] No known data-loss or unhandled-error risk.
+- [ ] Relevant existing tests and new acceptance checks pass.
+- [ ] Auth, permissions, ownership, and privacy still hold where relevant.
 
-- [ ] Existing core flows related to this slice still work
-- [ ] No broken navigation in touched areas
-- [ ] No obvious UI regressions in touched screens
-- [ ] No known data loss risk
-- [ ] No new unhandled errors
-- [ ] Existing relevant tests pass
-- [ ] New acceptance criteria are covered
-- [ ] Auth, permissions and privacy still hold where relevant
-
-Run broader checks only when `docs/qa/qa-plan.md` says the changed surface requires them. Record any skipped relevant item and why in the QA report.
-
-Record whether the full suite was required and the exact trigger in the QA report; do not run it merely from habit.
+Run broader checks only when `docs/qa/qa-plan.md` identifies the affected-surface trigger. Record skipped relevant items and why in the PR's QA section; use a separate report only when risk requires it.

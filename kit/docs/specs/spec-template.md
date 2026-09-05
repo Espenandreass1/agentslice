@@ -1,44 +1,29 @@
-# Slice Spec: [Name]
+# Controlled Change Spec: [Name]
 
-Keep a small spec to about 120 lines or fewer. If risk makes that unsafe, state the reason and link to focused supporting material instead of repeating it.
+Use this only when a controlled change needs more durable detail than the PR template can safely hold. Keep it about 120 lines or fewer; explain a longer record by risk. Link to the PR and do not duplicate its status.
 
-## Approval status
+## Approval
 
-Draft / Approved / Rejected
+- PR: [URL]
+- Status: Draft / Approved / Rejected
+- Human plan/spec approval: [Who/date or pending]
 
-Do not implement until this is explicitly approved and `workflow-state.md` says `Spec approved: Yes`.
+## Scope and boundary
 
-## Context links
+- Concrete user problem and outcome: [Short.]
+- Likely files/areas: [Exact paths.]
+- Must not change: [Explicit boundaries.]
+- Policy-sensitive area: [Name/path trigger.]
 
-- Current slice: `docs/planning/current-slice.md`
-- Active context: `docs/planning/active-context.md`
-- Relevant decision or archive record: [Path, only if needed]
-
-## Goal and scope
-
-- Goal: [Observable outcome.]
-- Included: [Concise list.]
-- Not included: [Concise list.]
-
-## Change boundary
-
-- Likely files or areas touched: [Exact paths/areas.]
-- Must not change: [Explicit out-of-scope paths/areas.]
-- Complexity and rough change range: [Tiny/Small/Medium; range.]
-
-## Acceptance and risk
+## Acceptance, risk, and rollout
 
 - Acceptance criteria: [Observable pass/fail list.]
-- Regression risks and edge cases: [Only relevant items.]
-- Security/data/ownership/commerce considerations: [Only if relevant.]
+- Security/data/ownership/commerce risk: [Relevant risk only.]
+- QA and broader-check trigger: [Exact selected checks.]
+- Rollback: [Revert, flag, migration/data recovery, or not applicable.]
 
-## Implementation and QA
+## Links
 
-- Approach or constraints: [Existing patterns and non-obvious choices.]
-- QA checks: [Focused checks plus any required broader check.]
-- Full-suite decision: [Not required / Required; exact trigger and check, or why focused scope is sufficient.]
-- Why broader checks are deferred: [Only when applicable; state residual risk.]
-
-## Approval needed
-
-Approve, reject, or adjust this spec before build starts.
+- PR: [URL]
+- QA report, if exceptional: [Path]
+- Decision/archive record, if needed: [Path]

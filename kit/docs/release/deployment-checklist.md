@@ -1,13 +1,13 @@
 # Deployment Checklist
 
-- [ ] Current slice and spec were explicitly approved.
-- [ ] QA result is `PASS` or `PASS WITH NOTES`; blockers are resolved.
-- [ ] QA report identifies selected and deferred checks with reasons.
-- [ ] QA report and checkpoint state the full-suite decision, test-execution purpose/count, and any residual risk.
-- [ ] Relevant build, database, migration, framework, commerce, auth/ownership, and production checks ran or have an explicit risk decision.
-- [ ] `workflow-state.md` is in `HUMAN_RELEASE_APPROVAL`.
-- [ ] Human release approval received.
-- [ ] One short user-facing changelog entry is ready.
-- [ ] External release notes are prepared only if an external audience exists.
-- [ ] Rollback and post-release monitoring are understood when relevant.
-- [ ] Completed checkpoint is archived with the release record before the next slice starts.
+Use the PR as the current decision record. For a controlled or production release, confirm:
+
+- [ ] One valid lane passed the AgentSlice CI gate.
+- [ ] Human scope approval and, when controlled, plan/spec approval are visible in the PR.
+- [ ] Independent QA is `PASS` or `PASS WITH NOTES`; blockers are resolved.
+- [ ] The PR states selected/deferred checks, residual risk, and rollback.
+- [ ] Relevant auth/ownership, database/RLS/migration, commerce, build/framework, and production checks ran or have an explicit human risk decision.
+- [ ] Human release approval is recorded before deployment.
+- [ ] One short user-facing changelog entry is ready when users are affected.
+
+Create external release notes only when an external audience exists. Do not create them for internal/local-first releases.

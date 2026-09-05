@@ -1,106 +1,90 @@
 # AgentSlice Agent Rules
 
-This is the canonical, permanent workflow contract. It must exist in every AgentSlice project. `docs/planning/workflow-state.md` is the only source of truth for the active phase and approval fields; do not infer either from another document.
+This is the canonical workflow contract. It must exist in every AgentSlice project. AgentSlice is PR-first: a formal change is described, reviewed, QA'd, and decided in its pull request. `docs/planning/workflow-state.md` remains the source of truth for long-running product planning and legacy document-led work; it must not be updated just to duplicate a merged PR's status.
 
-AgentSlice is a Markdown workflow kit, not an executable gatekeeper. Enforce these rules through your behavior and distinguish human approval from technical enforcement.
+## Start safely and use minimal context
 
-## Required approval gates
+Before editing, run a workspace sanity check:
 
-Do not change these four gates:
+1. Read `agentslice.policy.json` and compare `canonicalWorkspace` with the repository root (`git rev-parse --show-toplevel`).
+2. If they differ, stop and ask which checkout is canonical. Do not silently edit a similarly named clone, an old cloud-sync copy, or an unzipped kit.
+3. Read only `AGENT_RULES.md`, `docs/planning/active-context.md`, `docs/planning/workflow-state.md`, and `docs/planning/current-slice.md`.
 
-1. A human approves the slice before a full build spec is written.
-2. A human approves the build spec before implementation begins.
-3. Independent QA returns `PASS` or `PASS WITH NOTES` before a release recommendation.
-4. A human approves the release before deployment or release.
+Add only the files needed for the work:
 
-Natural approval language is valid (`approve`, `approved`, `yes, go`, `go for it`, `looks good`, or equivalent). If it could refer to something other than the current slice, spec, or release, ask for confirmation.
-
-## Progressive context
-
-At every start, resume, or phase change, read only this active preflight:
-
-- `AGENT_RULES.md`
-- `docs/planning/active-context.md`
-- `docs/planning/workflow-state.md`
-- `docs/planning/current-slice.md`
-- `docs/planning/checkpoint.md`
-
-`checkpoint.md` is a short handoff and telemetry summary, not a second state file. If it conflicts with `workflow-state.md`, follow `workflow-state.md` and repair the checkpoint.
-
-Then add only the context for the current role:
-
-| Role | Read in addition to the active preflight |
+| Work | Read in addition |
 |---|---|
-| Planning | `docs/product/vision.md`, `docs/engineering/tech-stack.md`, and live `docs/planning/next-slices.md` |
-| Build | The approved spec and `docs/engineering/coding-rules.md` |
-| QA | The approved spec, changed files, `docs/qa/qa-plan.md`, and at most one directly relevant earlier QA report when needed |
-| Release | The current spec, current QA report, and `docs/release/changelog.md` |
+| Explore locally | Relevant source files and the policy's sensitive areas |
+| Plan a formal change | Product vision, tech stack, live `next-slices.md`, and policy |
+| Build | The PR description, approved spec only when one exists, coding rules, and relevant files |
+| QA | PR description, changed files, QA plan, and at most one directly relevant earlier QA report |
+| Release | PR description, current QA result, and changelog |
 
-Never bulk-read `docs/specs/`, `docs/qa/`, release documents, decision logs, or archives as preflight. When history is needed, start with `docs/archive/README.md`, then use its links or targeted search to open only the relevant record.
+Never bulk-read specs, QA reports, decisions, release records, or archives. For a concrete historical question, start with `docs/archive/README.md`, then follow one link or use targeted search.
 
-### Legacy-project fallback
+## Choose an operating mode before code
 
-New AgentSlice projects always include `active-context.md`. In an existing project that predates it, preserve the gates and seed this file from the current state, current slice, vision, and tech stack only; do not compensate by bulk-reading history. Follow `docs/agents/migrating-to-active-context.md` and keep old records reachable through the archive index.
+### Local exploration
 
-## Hard stops
+Use a local `explore/<idea>` branch to test whether an idea is worth preserving. It creates no PR, Vercel preview, spec, QA report, release note, checkpoint, or workflow-state update. Keep it short, reversible, and local-only. It is never deployable evidence.
 
-- No approved slice: do not write implementation code.
-- No approved spec, or `Spec approved` is not `Yes`: do not write implementation code.
-- The approved spec does not name likely touched files or areas: stop and ask.
-- A needed change falls outside the approved spec: stop and obtain a scope/spec update.
-- QA result is `FAIL`: do not recommend release.
-- Release approval is not `Yes`: do not deploy or release.
-- Active phase or approval fields are unclear: stop and ask where to resume.
+Ask first: **What concrete current user problem does this solve?** If there is no answer, keep the work exploratory or stop; do not create a slice around a hypothetical scenario.
 
-## Quick-fix lane
+Never keep a sensitive change in local exploration. Auth, ownership, privacy, database/RLS, migrations, public contracts/pages, providers/integrations, commerce, hosting, CI, deployment, or production data must be promoted promptly to a controlled PR. Follow the project-specific `sensitiveAreas` policy rather than re-inferring risk.
 
-Use the quick-fix lane only for a small, reversible correction with a narrow regression surface (normally one or two areas). It may use a compact slice and compact spec, but it never bypasses any of the four gates, scope limits, security review, lint/typecheck, or independent QA.
+End exploration by either deleting/abandoning the branch or promoting the useful evidence to a PR. At promotion, state the user problem, chosen lane, scope, test plan, and rollback in the PR. A compact PR plan replaces a separate spec for low-risk work.
 
-- A fix already inside an approved spec may be handled as a QA fix and re-tested.
-- A new fix needs explicit slice approval, a short approved spec, QA, and release approval like any other slice.
-- Auth, ownership, database/RLS, payments/commerce, privacy, migrations, shared contracts, or production configuration are never quick-fix shortcuts; apply the relevant broader QA.
+### Formal PR workflow
 
-## Scope, QA, and security
+Every formal PR has exactly one lane marker from the bundled PR template. The PR is the live source for its lane, completed work, QA result, merge/release decision, rollback, and links to exceptional artifacts. Update that PR while it is open; do not create a follow-up documentation commit solely to mark it completed after merge.
 
-- Build only the approved slice. Do not silently expand scope, refactor unrelated code, or add production dependencies without approval.
-- Keep slices reviewable in under five minutes. A small spec and QA report should each be about 120 lines or fewer; document a risk-based reason when either must be longer.
-- QA is independent: use a separate QA agent where available, otherwise switch to a critical independent QA role.
-- Treat auth, data, ownership, privacy, and commerce risks as release blockers until resolved.
-- QA must state the focused/default scope, whether a full suite was required and why, checks selected, skipped checks and reasons, acceptance-criteria result, findings, and release recommendation. It links to the spec rather than repeating it.
+Use a separate spec, QA report, release recommendation, or handoff only when risk, auditability, or a project policy requires it. Link to each other and add only new information; do not repeat a spec in a QA report or QA table in a release recommendation.
 
-## Handoff, compression, and telemetry
+## Four lanes
 
-At every slice or meaningful phase change, create or refresh the short, machine- and human-readable `docs/planning/checkpoint.md`. At a human-approved gate and at release, this is mandatory before handoff. It must link to—not duplicate—the authoritative files and record:
+| Lane | Use for | Required evidence | Never use for |
+|---|---|---|---|
+| `docs` | Text, guidance, or Markdown-only changes | PR summary and affected-doc review | App, configuration, deployment, or sensitive paths |
+| `fast-bug` | A reproduced, narrow bug with at most two application files | Reproduction, focused regression, strict file boundary | Sensitive paths, refactors, or adjacent feature work |
+| `standard-feature` | One clear user outcome with a bounded surface | User problem, acceptance check, targeted tests | Sensitive paths or multi-surface contract changes |
+| `controlled-change` | Database, auth, public contract/page, provider, commerce, hosting, production data, or any policy-sensitive change | Explicit scope, QA decision, approval and rollback | Nothing; choose it whenever uncertain |
 
-- status and the next action;
-- authoritative slice, spec, QA, and release records;
-- completed checks, active risks, and deferred checks;
-- per-slice telemetry: number and purpose of test executions, whether full suite ran and why, agent/role calls, and a clearly labelled context estimate.
+The GitHub workflow enforces one valid lane, blocks unsafe lane/path combinations, and enforces the fast-bug application-file limit. It reruns when the PR description changes. CI is a safety net, not evidence that a change is safe: keep branch protection and human review enabled for the repository.
 
-For a rough context estimate, record the active-preflight and role-file character count divided by four (or a local tokenizer result when available). Do not count historical records that were intentionally not read. Telemetry informs efficiency; it never changes a gate or substitutes for QA evidence.
+## Approval gates and hard stops
 
-After a human-approved gate, run a compression pass as part of the workflow:
+The four approval gates remain unchanged for formal, deployable work. In PR-led work their evidence may live in the PR instead of separate Markdown files:
 
-1. Update `workflow-state.md`, then active context and the checkpoint.
-2. Move only closed or superseded records, old checkpoint snapshots, and old state snapshots into a dated archive folder.
-3. Update `docs/archive/README.md` and preserve a redirect/stub for any still-referenced old path.
-4. Trim active documents to links and current facts; never delete history or archive uncertain/current material merely to make it shorter.
+1. Human scope/slice approval before a change is treated as build-ready.
+2. Human implementation-plan/spec approval before controlled implementation proceeds.
+3. Independent QA returns `PASS` or `PASS WITH NOTES` before a release recommendation or merge decision.
+4. Human release approval before deployment or release.
 
-AgentSlice is Markdown, so this is an automatic workflow duty for the agent completing the milestone, not an unattended background process.
+Natural approval language is valid when it clearly refers to the current PR or artifact. For a controlled change, a compact PR plan may be the approved spec, but it must name likely touched areas, acceptance criteria, risks, QA, and rollback. Local exploration is not formal implementation and cannot satisfy or bypass a gate.
 
-## Delegation and output discipline
+Hard stops:
 
-- Do not parallelize or create subagents by default. Use one agent when work is sequential or shares the same context; delegate only when independent work has a real time or quality benefit and a clear boundary. Independent QA/review is the normal exception.
-- Keep handoffs and normal updates short and structured. For a passed command, show the command and one-line result. For a failure, show only the relevant excerpt, impact, and next action.
-- Do not repeat the spec, prior status, QA tables, or requirements in every phase. Link to the authoritative record and state only new information, active risk, and the decision or action needed.
+- Unknown canonical workspace, lane, scope, or approval: stop and ask.
+- No concrete user problem: do not start a full slice/spec process.
+- A non-controlled lane touches a policy-sensitive path: stop, reclassify as `controlled-change`, and update the PR.
+- `fast-bug` exceeds its configured application-file boundary: stop and reclassify.
+- QA `FAIL`: do not recommend merge, release, or deployment.
+- Missing release approval: do not deploy or release.
+- Auth, ownership, data, privacy, commerce, shared contracts, migrations, and production configuration remain release blockers until resolved.
 
-## Active-document updates and archive
+## QA policy
 
-- Update `workflow-state.md` after each phase change. Keep it limited to active phase, approval fields, next action, valid phases, and hard stops.
-- Update `active-context.md` when confirmed product context, active constraints, current slice/spec, next gate, QA policy, or nearest priorities change. Keep it at 180 lines or fewer. Refresh `checkpoint.md` at every handoff; keep it under 80 lines.
-- Keep `next-slices.md` to one to three living candidates; keep `decisions.md` to active decisions and constraints; add one short user-facing entry to `changelog.md` per release.
-- Do not create separate release notes for an internal or local-first release unless there is an external audience.
-- Move closed material to a dated archive; never delete history or leave a link broken. Follow `docs/archive/README.md`.
+QA is independent: use a separate QA agent when available; otherwise switch to a critical independent role. Default to focused acceptance tests plus relevant domain regression, and lint/typecheck for code changes. Run a full suite only when the change touches shared contracts, auth/ownership, database/RLS/migrations, public flows including commerce, build/framework/deploy configuration, or a production release. Run build and database checks only when that surface warrants them.
+
+The PR must say which checks ran, why they were selected, why broader checks were deferred, and the residual risk. Small exceptional specs and QA reports should be about 120 lines or fewer; explain a longer record by risk. A documentation PR has no required application test or Vercel build. A canceled provider deployment can still appear or consume capacity; it means no completed preview, not necessarily zero cost.
+
+## Compact records, history, and output
+
+- Keep `active-context.md` under 180 lines, `workflow-state.md` to phase/approvals/next action/valid phases/hard stops, `next-slices.md` to one to three candidates, `decisions.md` to active constraints, and the changelog to one short user-facing entry per release.
+- At a meaningful formal handoff, use `checkpoint.md` only when an active PR needs a fresh-worker handoff or risk requires it. It is not required for docs, fast-bug, or short standard-feature PRs.
+- After a completed milestone, archive closed records in a dated folder and update `docs/archive/README.md`. Never delete history or break links; leave a stub or index redirect for a moved target.
+- Do not parallelize by default. Use another agent only for a real independent gain; independent QA/review is the normal exception.
+- For a passed command, report the command and a one-line result. For a failure, report only the relevant excerpt, impact, and next action. Link to authoritative evidence instead of restating it.
 
 ## Bundled skills
 

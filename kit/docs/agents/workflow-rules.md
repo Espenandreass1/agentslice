@@ -1,21 +1,28 @@
-# Workflow Rules
+# PR-Driven Workflow Rules
 
-The workflow owner coordinates state, slice selection, spec quality, QA, release recommendation, and archival without turning history into startup context.
+## Start with the smallest useful context
 
-## Context and state
+Validate `agentslice.policy.json` against the Git root, then read the four-file preflight named in `AGENT_RULES.md`. Add files only for the role and task. Historical docs are evidence on demand, never startup context.
 
-- Start with the five-file active preflight in `AGENT_RULES.md`.
-- Add only the role-specific files named there. Never bulk-read document directories.
-- Use `docs/archive/README.md` plus targeted search when historical evidence is necessary.
-- `workflow-state.md` is the only source of truth for active phase and approval fields. Update it after each phase change.
-- Update `active-context.md` with confirmed active context; keep it under 180 lines.
-- Refresh `checkpoint.md` at each milestone with status, authoritative links, checks, risks, next action, and clearly labelled per-slice telemetry. It is a summary, never state truth.
+## Pick the mode and lane
 
-## Workflow discipline
+Ask for the concrete current user problem. A short local `explore/<idea>` branch is allowed only for a reversible, non-sensitive experiment. It creates no process documents, PR, preview, merge, or deployment. Abandon it or promote it quickly.
 
-- Ask at most five intake questions and default to minimal mode.
-- Keep one to three living candidates in `next-slices.md`; a proposed candidate is not approval.
-- Preserve the four gates and all hard stops in `AGENT_RULES.md`.
-- Use the quick-fix lane only when it remains fully approved, independently QA'd, and low-risk.
-- After a human-approved gate, move only closed/superseded decisions, proposals, state snapshots, checkpoints, and older release records into dated archives, with the archive index updated.
-- Do not parallelize by default. Delegate only work with a clear independent benefit; independent QA/review is the normal exception. Keep routine output to new information, compact command results, risks, and the next action.
+Every formal PR chooses exactly one lane:
+
+- `docs`: guidance/text only; no required application test or Vercel build.
+- `fast-bug`: reproduced narrow bug, focused regression, at most the policy's application-file limit.
+- `standard-feature`: one user outcome and targeted tests.
+- `controlled-change`: sensitive policy path or an uncertain/high-risk change.
+
+The PR template is the live record for scope, work, QA, decision, and rollback. A separate spec, QA report, release recommendation, or checkpoint is exceptional evidence for controlled, complex, or audit-sensitive work—not default paperwork.
+
+## Gates, QA, and CI
+
+The four formal gates remain unchanged. Put their compact evidence in the PR when a separate document adds no new value. Independent QA returns `PASS`, `PASS WITH NOTES`, or `FAIL`; `FAIL` blocks merge/release/deployment. Use focused acceptance/domain regression plus lint/typecheck for code by default. Escalate to full suite, build, or database checks only for the exact policy/QA trigger.
+
+`.github/workflows/agentslice-pr-gate.yml` reads the trusted base branch policy on `opened`, `edited`, and code changes. It requires one lane marker, rejects a non-controlled lane on sensitive files, and limits `fast-bug` application files. Configure GitHub branch protection separately to require this check and human review.
+
+## Compression and handoff
+
+Do not copy a merged PR's status into active docs. Keep active planning docs short. Archive only closed document-led records in dated folders, with the index updated and old links preserved. Create `checkpoint.md` only for a meaningful fresh-worker handoff or when risk needs it.

@@ -1,36 +1,31 @@
 # QA Plan
 
-QA is independent and must return `PASS`, `PASS WITH NOTES`, or `FAIL`. Use focused acceptance tests and relevant domain regressions by default; link to the spec rather than restating it.
+QA is independent and returns `PASS`, `PASS WITH NOTES`, or `FAIL`. For ordinary PRs, record the decision in the PR's QA section; use `qa-report-template.md` only when risk or auditability needs a separate report.
 
-## Baseline for code changes
+## Default for code changes
 
-- Run focused tests for acceptance criteria and the changed domain.
-- Run lint and typecheck when the project provides them.
-- Review changed files against the approved spec and ask what could break.
-- Treat this focused scope as the default, not as a reduced-quality option.
-- Record selected checks, skipped checks, the reason for every deferral, and whether a full suite was required.
+- Focused acceptance tests for the PR's stated user outcome.
+- Relevant domain regression.
+- Lint and typecheck when the project provides them.
+- Review changed files against PR scope and policy-sensitive areas.
 
-## Require broader checks when the change affects
+This is the normal quality baseline. State selected checks, deferred checks, their reason, and residual risk in the PR.
+
+## Require broader checks for
 
 - shared contracts, public APIs, or cross-feature components;
-- auth, identity, permissions, tenant/data ownership, privacy, or security;
+- auth, identity, permissions, ownership, privacy, or security;
 - database schema, migrations, RLS, persistence, or data integrity;
-- public user-facing flows, including payments, billing, checkout, pricing, or commerce;
-- build tooling, framework configuration, deployment configuration, a production-critical change, or a production release.
+- public user-facing flows, payments, billing, checkout, pricing, or commerce;
+- build/framework/deployment configuration, production-critical work, or a production release.
 
-For these surfaces, run the relevant full suite, build, database checks, migration checks, integration tests, or production-safe verification available in the project. A missing check must be called out as a risk, not silently skipped.
+Run the relevant full suite, build, database/migration checks, integration tests, or production-safe verification available in the project. If a required check cannot run, make that a visible release risk.
 
-## Scope decision
+## Lane expectations
 
-- Start with focused acceptance tests plus relevant domain regressions.
-- Escalate only when the changed surface matches a trigger above; state the exact trigger and the broader check selected. A large diff alone is not a full-suite trigger.
-- A production release is a full-suite trigger when a full suite exists and can be safely run. If it cannot, record the constraint and residual risk for human release approval.
-- Count test executions by purpose in the QA report and checkpoint. A command that runs multiple tests may be one execution; use the project's own test count when it is available.
+- `docs`: review affected guidance. No application test, Vercel build, or preview is required. A canceled provider deployment can still be visible or consume capacity; it does not prove zero cost.
+- `fast-bug`: reproduce, fix, and run the focused regression. Reclassify if more than the configured application-file limit or any sensitive path is needed.
+- `standard-feature`: focused acceptance and relevant regression.
+- `controlled-change`: use the exact broader checks triggered by the affected risk area and document rollback.
 
-## Select only relevant checks
-
-- Build only when the affected surface, deployment, framework, or production release warrants it.
-- Run database checks only for database/RLS/migration/data changes.
-- If no automated check exists, perform a focused manual smoke test and state the confidence limit.
-
-Optional CI starter: `docs/qa/github-actions-ci-template.yml` after the stack is confirmed.
+An optional generic CI starter is at `docs/qa/github-actions-ci-template.yml`; the installed PR lane gate is at `.github/workflows/agentslice-pr-gate.yml`.

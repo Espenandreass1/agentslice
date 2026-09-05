@@ -1,32 +1,11 @@
 # AgentSlice Runtime Rules
 
-Follow the canonical contract in `AGENT_RULES.md`. `docs/planning/workflow-state.md` is the only source of truth for active phase and approval fields.
+Follow `AGENT_RULES.md`. Before editing, read `agentslice.policy.json`, verify its canonical workspace against the Git root, then read only `AGENT_RULES.md`, `docs/planning/active-context.md`, `docs/planning/workflow-state.md`, and `docs/planning/current-slice.md`. Stop on a workspace mismatch. Use archives only through the index and targeted search.
 
-## Active preflight
+Choose a mode before coding. Local `explore/<idea>` work is brief, reversible, and never creates a PR, preview, spec, QA record, checkpoint, workflow-state update, merge, or deployment. Ask which current user problem it solves. Promote policy-sensitive work—auth, data/RLS, ownership, public pages/contracts, integrations, commerce, hosting, CI, or production data—promptly to a `controlled-change` PR.
 
-At every start, resume, and phase change, read:
+Every formal PR has exactly one lane marker: `docs`, `fast-bug`, `standard-feature`, or `controlled-change`. The PR is the live source for lane, work completed, QA, merge/release decision, and rollback. The bundled CI gate checks the marker, sensitive paths, and fast-bug's application-file limit whenever the PR or its description changes. Read only role-specific inputs: planning adds vision/stack/live candidates; build adds PR plan, approved spec if any, and coding rules; QA adds changed files, QA plan, and at most one relevant old report; release adds current QA and changelog.
 
-- `AGENT_RULES.md`
-- `docs/planning/active-context.md`
-- `docs/planning/workflow-state.md`
-- `docs/planning/current-slice.md`
-- `docs/planning/checkpoint.md`
+The four gates remain for formal deployable work: human scope approval; human spec/plan approval for controlled implementation; independent QA `PASS`/`PASS WITH NOTES`; human release approval. Never deploy after `FAIL` or without release approval. Low-risk PRs use compact PR evidence, not separate spec/QA/release/handoff documents. Keep active docs short, preserve closed history in dated archives with redirects, default QA to focused acceptance/domain regression plus lint/typecheck for code, and use broader checks only for the stated risk triggers.
 
-`checkpoint.md` is a handoff summary only; `workflow-state.md` alone controls phase and approvals. Then use role-specific context only: planning reads vision, tech stack, and live next slices; build reads the approved spec and coding rules; QA reads the approved spec, changed files, QA plan, and at most one directly relevant prior QA report; release reads current spec, QA report, and changelog. Do not bulk-read historical directories. Use `docs/archive/README.md` and targeted search only when history is needed.
-
-## Gates and hard stops
-
-Keep all four gates: human slice approval, human spec approval, independent QA `PASS`/`PASS WITH NOTES`, then human release approval. Do not write implementation code without the approved slice and spec, recommend release after `FAIL`, deploy without release approval, or continue when phase/scope is unclear.
-
-The quick-fix lane never bypasses these gates or reduces safeguards for auth, ownership, data, privacy, commerce, shared contracts, migrations, or production configuration.
-
-## Workflow behavior
-
-- Default to minimal mode and ask at most five intake questions.
-- Keep `active-context.md` under 180 lines and update it with confirmed active context.
-- Keep `next-slices.md` to one to three living candidates and `decisions.md` to active constraints.
-- Refresh the under-80-line checkpoint at meaningful phase/slice handoffs. After a human-approved gate, archive only superseded material through the index; never delete history.
-- QA is independent, links to evidence rather than repeating the spec, and follows `docs/qa/qa-plan.md`: focused acceptance/domain regression is default and a full suite needs a stated trigger.
-- Do not create subagents or parallel work by default; independent QA/review is the normal exception. Report commands and results compactly, linking to earlier evidence instead of restating it.
-
-Bundled skills are available under `.agents/skills/` and `.claude/skills/` when no runtime equivalent exists.
+Do not parallelize by default; independent QA/review is the normal exception. Keep output compact and link rather than repeat.

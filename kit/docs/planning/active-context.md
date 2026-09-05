@@ -1,48 +1,47 @@
 # Active Context
 
-Use this as the short, active memory for a start or resume. Keep it under 180 lines and link to details instead of copying them. Historical records live through the index at `docs/archive/README.md`.
+Keep this short (180 lines maximum). It is the active product memory, not a PR status mirror. Historical evidence is available through `docs/archive/README.md` only when a concrete question needs it.
 
 ## Product context
 
-- Product: [One or two sentences on what is being built and for whom.]
-- Problem and first useful value: [Short confirmed summary.]
-- Non-goals: [Short list or `None confirmed yet`.]
+- Product and users: [One or two confirmed sentences.]
+- Concrete current problem: [What user problem is active now, or `None confirmed`.]
+- First useful outcome / non-goals: [Short confirmed scope.]
 
 ## Active constraints
 
-- Product: [Current business, legal, launch, support, or audience constraints.]
-- Technical: [Current stack, integration, deployment, or compatibility constraints.]
-- Security/data: [Current auth, ownership, privacy, data, or commerce constraints.]
+- Product: [Current business, legal, audience, or launch constraints.]
+- Technical: [Stack, compatibility, integration, or deploy constraints.]
+- Security/data: [Auth, ownership, privacy, data, commerce, or policy constraints.]
 
-## Current slice and spec
+## Current planning work
 
-- Slice: [Name and status; details in `current-slice.md`.]
-- Spec: [Path and approval status; `None` until drafted.]
-- Current QA report: [Path and result; `None` until QA starts.]
-- Active checkpoint: `docs/planning/checkpoint.md` [Status; this is a handoff summary, not state truth.]
-- Scope boundary: [One short statement, or `No approved scope yet`.]
+- Current slice: [Name/status; `current-slice.md` holds detail.]
+- Current formal PR: [URL/number or `None`. The PR holds live status.]
+- Current controlled spec/QA record: [Link only when required, otherwise `None`.]
+- Scope boundary: [One short statement.]
 
-## Next gate
+## Next decision
 
-- Required gate: [Slice approval / spec approval / build / QA / release approval.]
-- Human decision or evidence needed: [Short, concrete request.]
+- Needed: [User problem / explore or PR / slice approval / controlled plan approval / QA / release approval.]
+- Evidence or human decision: [Short concrete request.]
 
-## QA policy for the active work
+## QA default
 
-- Focused acceptance tests and relevant domain regressions by default.
-- Lint and typecheck for code changes.
-- Broader checks required when the changed surface triggers them; see `docs/qa/qa-plan.md`.
+- Focused acceptance tests and relevant domain regression.
+- Lint/typecheck for code changes.
+- Full suite, build, and database checks only for the explicit trigger in `docs/qa/qa-plan.md`.
 
 ## Nearest priorities
 
-1. [Current highest-priority action.]
+1. [Current action.]
 2. [Next likely action.]
-3. [Optional, only if actively relevant.]
+3. [Optional only when live.]
 
 ## Pointers
 
+- Project risk map: `agentslice.policy.json`
 - Product detail: `docs/product/vision.md`
 - Stack detail: `docs/engineering/tech-stack.md`
-- Active decisions: `docs/planning/decisions.md`
+- Living candidates: `docs/planning/next-slices.md`
 - Historical index: `docs/archive/README.md`
-- Handoff and telemetry: `docs/planning/checkpoint.md`

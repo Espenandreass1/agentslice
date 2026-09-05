@@ -2,112 +2,88 @@
 
 # AgentSlice
 
-A free, open-source workflow kit for AI coding agents.  
-Makes Cursor, Claude Code, Codex and Windsurf ask before they edit.
+**A PR-first workflow kit for AI coding agents.**
+
+Local exploration when an idea is uncertain. Automatic lane checks when a change matters.
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![GitHub Issues](https://img.shields.io/github/issues/espenandreass1/agentslice)](https://github.com/espenandreass1/agentslice/issues)
-[![Discussions](https://img.shields.io/github/discussions/espenandreass1/agentslice)](https://github.com/espenandreass1/agentslice/discussions)
+[![GitHub Discussions](https://img.shields.io/github/discussions/espenandreass1/agentslice)](https://github.com/espenandreass1/agentslice/discussions)
 
-[Website](https://getagentslice.com) •
-[Discussions](https://github.com/espenandreass1/agentslice/discussions)
+[Website](https://getagentslice.com) · [Discussions](https://github.com/espenandreass1/agentslice/discussions)
 
 </div>
-
----
 
 ## Quick start
 
 ```bash
-npx agentslice init
-# Paste INSTALL_PROMPT.md into Cursor / Claude Code / Codex / Windsurf
-# Watch the agent ask, plan, and wait
+npx agentslice@latest init
 ```
 
-That's it. No build step, no runtime, no editor extension.
+1. Paste `INSTALL_PROMPT.md` into Cursor, Claude Code, Codex, or Windsurf.
+2. Set `canonicalWorkspace` and the sensitive paths in `agentslice.policy.json`.
+3. In GitHub, require **Verify AgentSlice lane** and human review before merging to your protected branch.
 
-## 30-second demo
+## The workflow scales with risk
 
-<div align="center">
-  <img src="https://getagentslice.com/assets/demo-poster.jpg" alt="AgentSlice demo" width="600">
-</div>
+```text
+Concrete user problem
+        ↓
+Explore locally ── abandon or promote ──→ Formal PR → Independent QA → Human release decision
+```
 
-## What it does
+An `explore/<idea>` branch is intentionally light: no PR, preview, spec, QA record, release note, checkpoint, merge, or deployment. It is for finding out whether an idea is worth keeping. Sensitive work is promoted quickly to a controlled PR.
 
-AI coding agents work better when they know the next step. Without a workflow they suffer from three failure modes developers describe constantly:
+Every formal pull request has exactly one lane:
 
-- **Context drift** — the agent forgets what was decided two messages ago and reopens settled questions.
-- **Wandering edits** — the agent expands the task, touches files you didn't ask about, and burns tokens on detours.
-- **Editing without asking** — the agent jumps straight to changes before you've approved a plan.
+| Lane | Best for | Process |
+|---|---|---|
+| `docs` | Text and guidance only | Review affected docs; no required application test or Vercel build |
+| `fast-bug` | Reproduced, narrow bug | Focused regression; maximum two application files by default |
+| `standard-feature` | One bounded user outcome | Targeted acceptance and domain regression |
+| `controlled-change` | Auth, data/RLS, public contract/page, integration, commerce, hosting, CI, production data | Explicit plan, broader QA as triggered, approval, and rollback |
 
-AgentSlice gives the agent a project-local workflow it actually reads: a compact active context plus durable gates and state. It pins down the phases, approvals, and next action without forcing every new session to load old specs, QA reports, and decision history.
+The PR is the live source for lane, scope, work completed, QA result, merge/release decision, and rollback. Low-risk work does not need separate spec, QA, release, and handoff files just to say the same thing.
 
-## What's in the kit
+## Harder to misclassify
+
+The installed GitHub Action runs on PR creation, updates, and description edits. It reads the policy from the trusted base branch and:
+
+- requires exactly one lane marker;
+- rejects a non-controlled lane on a sensitive path;
+- restricts a `fast-bug` to its configured application-file boundary.
+
+The lane gate is technical enforcement of classification, not a replacement for review. GitHub branch protection should require this check and a human review. The workflow uses `pull_request_target` while checking out only the base ref; GitHub recommends never running untrusted PR code in this event context. [GitHub’s event guidance](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request_target)
+
+## Context without context debt
+
+At start/resume, agents validate the canonical workspace and read only:
+
+- `AGENT_RULES.md`
+- `docs/planning/active-context.md`
+- `docs/planning/workflow-state.md`
+- `docs/planning/current-slice.md`
+
+They add only role-specific inputs after that. History stays intact in `docs/archive/`, but is opened through the index and targeted search only when a concrete question requires it. Active docs are intentionally short; normal PRs are not duplicated into status documents after merge.
+
+## What is included
 
 | File | Purpose |
 |---|---|
-| `INSTALL_PROMPT.md` | The one prompt you paste into your AI tool to bootstrap the workflow. |
-| `docs/planning/workflow-state.md` | Resumable state file — current phase, approved slice, QA status, next allowed action. |
-| `docs/planning/active-context.md` | Short active product context, constraints, current slice/spec, next gate, QA policy, and near priorities. |
-| `docs/planning/checkpoint.md` | Compact handoff with authoritative links, checks, risks, next action, and per-slice efficiency estimate. |
-| `docs/archive/README.md` | Index for preserved historical decisions, slice proposals, state snapshots, and release records. |
-| `.agents/skills/` | Shared planning skills: intake, slice planning, spec, QA gate, release, advance. |
-| `.cursor/rules/` | Project rules for Cursor. |
-| `.claude/skills/` + `CLAUDE.md` | Skills and project memory for Claude Code. |
-| `.codex/skills/` + `AGENTS.md` | Skills and project rules for Codex. |
-| `.windsurf/rules/` + `.windsurfrules` | Rules for Windsurf. |
+| `AGENT_RULES.md` | Canonical local-exploration, PR, approval, QA, and archive rules |
+| `agentslice.policy.json` | Canonical workspace plus project-specific sensitive paths and lane limits |
+| `.github/PULL_REQUEST_TEMPLATE.md` | Live PR status, QA, decision, and rollback template |
+| `.github/workflows/agentslice-pr-gate.yml` | CI lane/path guard |
+| `docs/planning/active-context.md` | Compact product context and nearest decision |
+| `docs/planning/workflow-state.md` | Active planning phase and approvals for document-led/legacy work |
+| `.agents/skills/`, `.claude/skills/` | Skills for exploration, planning, controlled specs, QA, release, and archival |
 
-Everything is plain Markdown. You can read it, fork it, edit it for your stack.
+Everything is plain Markdown, JSON, and a small local GitHub Action helper. There is no daemon, editor extension, or application runtime.
 
-## Supported tools
+## Existing projects
 
-Cursor · Claude Code · Codex · Windsurf · OpenCode · any agent that respects project-level rule files (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`, `.windsurfrules`).
+The migration is additive. Existing specs, QA reports, release notes, and decisions remain valid evidence; they are not deleted or bulk-loaded. See [the migration guide](kit/docs/agents/migrating-to-active-context.md).
 
-## How it works
+## Contributing and license
 
-```
-Ask → Plan → Approve → Build → QA → Release → Next
-```
-
-1. **Ask.** The agent asks up to five product questions and writes lightweight context.
-2. **Plan.** It proposes a first *slice* — the smallest end-to-end vertical you can ship.
-3. **Approve.** You approve, reject, or adjust the slice. The agent waits.
-4. **Build.** Only after approval does the agent write code.
-5. **QA.** An independent QA role checks the work and reports PASS / PASS WITH NOTES / FAIL. Focused acceptance/domain regression is standard; a full suite needs a stated risk trigger.
-6. **Release.** A release recommendation is written. You approve.
-7. **Next.** The state file advances to the next slice. The loop repeats.
-
-The state, active context, and compact handoff checkpoint live in small separate files, so the next agent session resumes from current facts instead of re-guessing or loading historical documents. At a human-approved gate, superseded snapshots move to dated archives with an index; nothing is deleted. AgentSlice avoids parallel subagents unless work has a clear independent benefit—independent QA/review is the normal exception.
-
-## Why this exists
-
-I spent 3 months experimenting with building AI products and testing different workflows. This is the workflow that actually worked — intake questions, slice discipline, QA handoff, cross-tool consistency.
-
-## Why no runtime, why just Markdown
-
-AgentSlice is deliberately not an editor extension, daemon, or hook system. Two reasons:
-
-1. **Portability.** The same files work in Cursor, Claude Code, Codex, Windsurf, OpenCode, and any future agent that reads project rules. A runtime would lock you into one tool.
-2. **Honesty.** No Markdown file can *force* an LLM to obey. The gates are soft — discipline through clarity, not enforcement. AgentSlice is up-front about this. The workflow is durable because it lives in your repo, not because it traps the model.
-
-If you need hard enforcement, pair AgentSlice with Cursor's PLAN / ASK toggle or Claude Code's hooks. AgentSlice gives the agent the workflow; your tool of choice can add the gates.
-
-## Contributing
-
-PRs, issues, and discussion are all welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
-
-The fastest way to help: open an issue with the exact prompt + tool + transcript where AgentSlice misbehaved. Real failure transcripts are gold for tuning the rules.
-
-## License
-
-[MIT](./LICENSE). Use it however you want — personal projects, client work, internal tooling, your own product. If you build something on top of AgentSlice, a link back is appreciated but not required.
-
-## Maintainer
-
-Built and maintained by [Espen Andreassen](https://www.linkedin.com/in/andreassenespen/). Reach out at espenandreass1@gmail.com or [open a discussion](https://github.com/espenandreass1/agentslice/discussions).
-
----
-
-<div align="center">
-Made in Norway. Opinionated. Free. MIT.
-</div>
+PRs, issues, and real failure transcripts are welcome. AgentSlice is [MIT licensed](LICENSE).

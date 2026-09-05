@@ -1,20 +1,20 @@
-# Archive index
+# Archive Index
 
-The archive preserves history without making it startup context. Read this index only when the active documents or a direct link cannot answer a concrete question; then open the smallest relevant record.
+The archive preserves document-led history without making it startup context. Pull requests remain their own durable GitHub history; do not copy normal PR status into Markdown merely to archive it.
 
-## Migration and retention
+## Safe migration and compression
 
-1. Create a dated folder such as `docs/archive/2026-08/`.
-2. Move closed decisions, old slice proposals, old workflow-state snapshots, superseded checkpoints, and older changelog or external release-note records into it. Do not delete them.
-3. Leave a short redirect/stub at an old linked path when it is still referenced, or add a clear old-path-to-new-path entry below before removing it.
-4. Keep `active-context.md`, `workflow-state.md`, `current-slice.md`, `checkpoint.md`, `next-slices.md`, `decisions.md`, and `changelog.md` short and current. Archive a completed slice's checkpoint so its handoff and telemetry remain traceable.
-5. Add each archive folder and any redirects to this index. Use links, not copied summaries.
+1. Create a dated folder such as `docs/archive/2026-09/`.
+2. Move only closed decisions, old slice proposals, superseded workflow-state snapshots, exceptional checkpoints, and older changelog/external-release records there. Never delete history.
+3. Update this index with each folder. If a moved file has incoming links, update them or leave a short redirect/stub at the former path.
+4. Keep active context, state, current slice, live candidates, decisions, and changelog short. Do not create document snapshots of ordinary merged PRs.
+5. Read this index only for a concrete historical question, then open the smallest relevant record.
 
 ## Archive folders
 
 | Period | Contents | Notes |
 |---|---|---|
-| [YYYY-MM] | [Decisions, slice proposals, state snapshots, releases] | [Link to folder or redirect map] |
+| [YYYY-MM] | [Closed decisions, proposals, snapshots, exceptional records] | [Link] |
 
 ## Redirect map
 

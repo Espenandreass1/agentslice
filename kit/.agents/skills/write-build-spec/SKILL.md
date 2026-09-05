@@ -1,30 +1,27 @@
 ---
 name: write-build-spec
-description: Use after a human approves a slice. Produces a compact, build-ready spec with traceable acceptance and QA checks, then stops for spec approval.
+description: Create a compact controlled-change plan only when the PR needs more durable detail than its template safely holds.
 ---
 
 # Write Build Spec
 
 ## Read
 
-Read the active preflight, then planning context (`vision.md`, `tech-stack.md`, live `next-slices.md`) and the spec template. Read `qa-plan.md` only to select checks for the proposed spec. Use archive records only through the index for a concrete unresolved constraint.
+Verify the workspace and minimal preflight. Read the formal PR, policy, coding rules, and planning context. Open one historical record only for a concrete unresolved constraint.
 
 ## Guardrails
 
-- Confirm an approved slice and phase `SLICE_APPROVED`; otherwise stop.
-- Do not implement. Set `Spec approved: No` and phase `SPEC_DRAFTED` after drafting.
-- Keep a small spec to about 120 lines or fewer. If risk requires more, explain why and link to focused supporting material.
-- Name likely touched areas, must-not-change areas, observable acceptance criteria, risks, and QA checks.
-- Do not parallelize this sequential planning step.
+- Use this for `controlled-change`, audit-sensitive, or unusually risky work—not ordinary docs, fast bugs, or bounded features.
+- The PR remains the live status source.
+- Require human controlled plan/spec approval before sensitive implementation proceeds.
+- Keep the spec around 120 lines or fewer; explain a longer record by risk.
 
 ## Steps
 
-1. Convert the approved slice into the smallest concrete spec.
-2. Link to current slice, active context, and only directly relevant decisions instead of copying them.
-3. Choose focused QA checks and identify an exact trigger for a full suite, or record why focused scope is sufficient.
-4. Update `current-slice.md`, `active-context.md`, `workflow-state.md`, and checkpoint.
-5. Stop for explicit human spec approval.
+1. Link the PR and state the user problem, touched/must-not-touch areas, policy trigger, acceptance, QA, and rollback.
+2. Set human approval evidence in the PR and planning state only when it is active planning.
+3. Stop for explicit controlled plan/spec approval.
 
 ## Output
 
-Present the compact spec and ask to approve, reject, or adjust it before build starts. Link to active context rather than repeat it.
+Link the compact plan and request approval. Do not duplicate PR status or create an unnecessary checkpoint.

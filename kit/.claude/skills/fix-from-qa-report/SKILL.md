@@ -1,29 +1,26 @@
 ---
 name: fix-from-qa-report
-description: Use after QA finds blockers. Fixes only approved blockers within the approved scope and prepares an independent QA re-test.
+description: Fix QA blockers only within a formal PR's approved lane and scope, then request independent re-test.
 ---
 
 # Fix From QA Report
 
 ## Read
 
-Read the active preflight, then the approved spec, `coding-rules.md`, changed files, and the current QA report that identified the blocker. Do not scan all QA reports or decision history.
+Verify the workspace and minimal preflight. Read the PR, changed files, coding rules, and the blocker evidence or exceptional QA report.
 
 ## Guardrails
 
-- Confirm phase `FIXES` and distinguish blockers from non-blocking notes.
-- Fix only approved blockers inside the approved spec. A scope/product change requires renewed approval.
-- Run focused checks and preserve auth, ownership, data, privacy, and commerce safeguards.
-- A QA fix is not a release approval and always needs independent re-test.
-- Do not parallelize routine fixes; an independent QA re-test remains required.
+- Fix only approved blockers inside PR scope. A new area, lane, or user outcome needs reclassification and approval.
+- Do not turn a `fast-bug` into a broader feature silently; CI limits remain active.
+- Keep sensitive safeguards intact and require independent re-test.
 
 ## Steps
 
-1. Summarize the specific blockers and requested fixes.
-2. Implement only those fixes; report files changed and checks run.
-3. Update active context and checkpoint with new evidence, residual risk, test-execution count, and next gate.
-4. Set phase `QA_RETEST` and run `run-qa-gate` again.
+1. State only the blocker and intended fix.
+2. Implement the narrow fix and run focused checks.
+3. Update PR live status and request independent QA re-test.
 
 ## Output
 
-Report only changed files, compact command results, unresolved risk, and the independent re-test next action.
+Report changed files, one-line checks, residual risk, and re-test next action. Do not create a duplicate status document.

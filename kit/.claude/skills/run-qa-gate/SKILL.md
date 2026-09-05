@@ -1,33 +1,33 @@
 ---
 name: run-qa-gate
-description: Use after implementation to independently verify the approved spec with proportional, evidence-based QA before release recommendation.
+description: Independently verify a formal PR with risk-based QA and record the decision in the PR.
 ---
 
 # Run QA Gate
 
 ## Read
 
-Read the active preflight, approved spec, changed files, and `docs/qa/qa-plan.md`. Read at most one directly relevant previous QA report when it informs a retest or known regression. Inspect available test commands as needed. Do not bulk-read QA, spec, release, or decision folders.
+Verify the workspace and minimal preflight. Read the PR, changed files, QA plan, and at most one directly relevant prior report. Add a controlled spec only if it exists.
 
-## Independence and gate
+## Guardrails
 
-Use a separate QA agent when available; otherwise switch to a critical independent QA role. This is the normal exception to the no-default-parallel rule. Confirm phase `BUILD`, `QA_SUBAGENT`, or `QA_RETEST`. Return `PASS`, `PASS WITH NOTES`, or `FAIL`; do not recommend release with a blocker.
+- Use a separate QA agent when available; otherwise switch to a critical independent role.
+- Confirm PR lane and policy-sensitive paths before selecting checks.
+- `FAIL` blocks merge/release/deployment.
 
 ## Check selection
 
-- Standard: focused acceptance tests, relevant domain regressions, lint, and typecheck for code changes.
-- Run the relevant full suite only for shared contracts, auth/ownership, database/RLS/migrations, public user-facing flows (including commerce), build/framework configuration, or production-critical changes/releases. State the exact trigger; otherwise state why focused scope was sufficient.
-- Run build and database checks only when the affected surface calls for them.
-- If a needed check cannot run, record why and its residual risk. If automation is absent, perform a focused manual smoke test and lower confidence accordingly.
+- Default: focused acceptance tests, relevant domain regression, lint, and typecheck for code.
+- Broaden only for shared contracts, auth/ownership, database/RLS/migrations, public/commerce flows, build/framework/deploy configuration, or production release.
+- Docs needs affected-guidance review, not an application test, build, or Vercel preview.
 
 ## Steps
 
-1. Compare changed files and behavior to the approved spec and acceptance criteria.
-2. Identify what could break, including security/data/ownership implications.
-3. Run selected checks; record results, test-execution purpose/count, full-suite decision, and deferrals.
-4. Write a QA report of about 120 lines or fewer, linking to the spec and evidence rather than repeating them. State a risk reason for any longer report.
-5. Update `workflow-state.md`: `PASS`/`PASS WITH NOTES` → `RELEASE_RECOMMENDATION`; `FAIL` → `FIXES`. Update active context and checkpoint with the next gate, risk, and telemetry.
+1. Verify outcome, scope, lane, and risk against the PR and policy.
+2. Run selected checks and state why they fit; list deferred checks and residual risk.
+3. Record independent `PASS`, `PASS WITH NOTES`, or `FAIL` in the PR.
+4. Create a separate QA report only when risk/auditability needs it, and link it from the PR.
 
 ## Output
 
-Give result, report link, compact check summary, residual risk, and next gate. Do not repeat the spec or QA tables.
+Give result, compact checks, residual risk, and merge/release decision needed. Do not repeat the PR plan.

@@ -4,7 +4,8 @@ Use these defaults until the project has stronger local conventions.
 
 ## Scope and safety
 
-- Build only the approved spec; do not add production dependencies or unrelated refactors without approval.
+- Build only the formal PR's approved scope and lane, or the narrow local-exploration hypothesis. Do not add production dependencies or unrelated refactors without approval.
+- `docs` changes guidance only. `fast-bug` stays inside the configured application-file limit. Reclassify any uncertain or policy-sensitive change as `controlled-change`.
 - Prefer explicit names, small functions, clear data flow, existing patterns, and reversible changes.
 - Validate inputs at boundaries; avoid hardcoded tenant/user/project IDs.
 - Treat auth, permissions, data ownership, privacy, data loss, and payments as release blockers, not polish.
@@ -19,4 +20,4 @@ Use these defaults until the project has stronger local conventions.
 - Add or update focused tests where the project has a test setup.
 - For code changes, run lint and typecheck when available.
 - Use full-suite, build, database, migration, integration, or production checks only when the QA policy says the changed surface requires them.
-- If automation is absent, document a focused manual smoke test in the QA report.
+- If automation is absent, record a focused manual smoke test in the PR's QA section or an exceptional QA report.

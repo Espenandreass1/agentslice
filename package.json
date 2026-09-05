@@ -1,7 +1,7 @@
 {
   "name": "agentslice",
-  "version": "1.0.3",
-  "description": "A Markdown workflow kit that makes Cursor, Claude Code, Codex and Windsurf ask before they edit.",
+  "version": "1.1.0",
+  "description": "A PR-first workflow kit for AI coding agents with local exploration and risk-based lanes.",
   "type": "module",
   "bin": {
     "agentslice": "bin/cli.js"

@@ -1,27 +1,24 @@
 # Current Slice
 
-Keep only the current slice snapshot here; the approved spec holds implementation detail.
+Use this only for the active product-planning slice. An open PR is the live source for implementation lane, status, QA, decision, and rollback.
 
 ## Identity and status
 
 - Slice: [Name]
-- Status: Not started / Slice approved / Spec drafted / Spec approved / Building / QA / Fixes / Ready for release / Released
-- Approved spec: [Path or `None`]
-- Current checkpoint: `docs/planning/checkpoint.md`
+- Status: Proposed / Approved / Formal PR open / Released / Archived
+- PR: [URL or `None`]
+- Exceptional spec: [Path or `None`]
 
-## Outcome and scope boundary
+## User value and boundary
 
-- Why it matters: [Short product reason.]
-- Included: [Short list.]
-- Not included: [Short list.]
-- Likely areas: [Paths, modules, routes, or data areas.]
-- Must not change: [Explicit boundary.]
+- Concrete current user problem: [Short statement.]
+- Intended outcome: [Observable result.]
+- Included / excluded: [Short boundary.]
+- Likely areas / must not change: [Paths or areas.]
 
-## Gate snapshot
+## Planning gate
 
-- Slice approval: Yes / No
-- Spec approval: Yes / No
-- QA status: Not started / PASS / PASS WITH NOTES / FAIL
-- Release status: Not ready / Awaiting human approval / Released
+- Human scope approval: Yes / No
+- Controlled plan/spec approval, if required: Yes / No / Not applicable
 
-`workflow-state.md` remains the only source of truth for active phase and approval fields; update it whenever this slice moves phase.
+`workflow-state.md` is the planning-state source. Do not mirror a merged PR's QA or release status here.

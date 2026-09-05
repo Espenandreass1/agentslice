@@ -1,29 +1,26 @@
 ---
 name: prepare-release
-description: Use after independent QA passes. Makes a concise, traceable release recommendation and waits for human approval.
+description: Turn a passing formal PR into a concise, traceable release decision without duplicating QA evidence.
 ---
 
 # Prepare Release
 
 ## Read
 
-Read the active preflight, current approved spec, current QA report, and `docs/release/changelog.md`. Do not bulk-read release notes, older QA reports, decisions, or archives.
+Verify the workspace and minimal preflight. Read the PR, QA result, current changelog, and exceptional records only when linked by the PR.
 
 ## Guardrails
 
-- Confirm phase `RELEASE_RECOMMENDATION` and QA result `PASS` or `PASS WITH NOTES`.
-- Link to QA evidence; do not repeat QA tables or the full spec.
-- Do not deploy without explicit human release approval.
-- Draft external release notes only when an external audience exists; internal/local-first releases use the changelog only.
-- Do not parallelize this sequential recommendation.
+- Require `PASS` or `PASS WITH NOTES` and explicit human release approval before deployment.
+- Keep outcome, risk, rollback, and release decision in the PR.
+- Add one short changelog entry only when users are affected. Create external release notes only for an external audience.
 
 ## Steps
 
-1. State the slice outcome, QA result, known limitations, and residual risks concisely.
-2. Draft one short user-facing changelog entry with links to the spec and QA report.
-3. Set phase `HUMAN_RELEASE_APPROVAL`, `Release approved: No`, and update the next gate in active context and checkpoint.
-4. Stop for human approval. After approval, release/deploy as authorized and record the short changelog entry.
+1. State outcome, QA result, residual risk, and rollback in the PR.
+2. Obtain human release approval in the PR.
+3. Release/deploy only as authorized, then add the short changelog entry when applicable.
 
 ## Output
 
-Give only the outcome, QA result/link, residual risk, changelog link, and approval required.
+Give PR link, QA result, residual risk, changelog link if created, and approval/deployment result. Do not repeat QA tables.

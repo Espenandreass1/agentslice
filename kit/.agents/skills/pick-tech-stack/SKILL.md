@@ -1,30 +1,27 @@
 ---
 name: pick-tech-stack
-description: Use when the project has no confirmed stack. Makes one pragmatic recommendation, records it only after approval, and preserves progressive context.
+description: Recommend one pragmatic stack only when the active product direction truly needs a stack decision.
 ---
 
 # Pick Tech Stack
 
+## Read
+
+Verify the canonical workspace and minimal preflight. Add planning context and inspect project manifests only as needed.
+
 ## Guardrails
 
 - Do not install dependencies, create application code, or create CI files.
-- Recommend one default stack, not a long menu.
-- Ask for human approval before updating `tech-stack.md`; keep only the active decision in `decisions.md`.
-- Do not parallelize this decision.
-
-## Read
-
-Read the active preflight, then planning context: `vision.md`, `tech-stack.md`, and live `next-slices.md`. Inspect existing project manifests/configuration only as needed. Use the archive index and targeted search for a concrete historical constraint; do not bulk-read decisions.
+- Recommend one default, not a long menu; record it only after human approval.
+- Consider the policy's sensitive areas and preserve active decisions only.
 
 ## Defaults
 
-- Simple SaaS/dashboard/internal tool: Next.js + TypeScript + managed Postgres/Auth + Vercel.
-- Static content/marketing: Astro or static Next.js + Vercel.
+- Simple SaaS/dashboard: Next.js + TypeScript + managed Postgres/Auth + Vercel.
+- Static content: Astro or static Next.js + Vercel.
 - Python/data API: FastAPI + Postgres + managed hosting.
-- AI web app: Next.js + TypeScript + Postgres + selected provider SDK; add queues only when a proven flow needs them.
-
-Prefer the fewest moving parts. Avoid custom auth, microservices, Kubernetes, multiple frontend frameworks, and premature queues/workers/caches.
+- AI web app: Next.js + TypeScript + Postgres + selected provider SDK; add queues only when proven.
 
 ## Output
 
-Give the recommended stack, short rationale, trade-offs, and an explicit approval request. After approval, update `tech-stack.md`, `active-context.md`, the active decision record, and checkpoint; archive superseded decisions through the index when applicable.
+Give recommendation, short trade-off, and approval needed. Update tech stack and active context after approval; no checkpoint unless a controlled handoff needs one.

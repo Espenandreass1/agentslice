@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "canonicalWorkspace": "__AGENTSLICE_CANONICAL_WORKSPACE__",
+  "localExploration": {
+    "branchPrefix": "explore/",
+    "rule": "Local exploration is short-lived, reversible, and never deployable. Promote sensitive work to a controlled PR promptly."
+  },
+  "lanes": {
+    "docs": {
+      "allowedPaths": [
+        "**/*.md",
+        "docs/**",
+        ".agents/**",
+        ".claude/**",
+        ".cursor/**",
+        ".windsurf/**",
+        ".windsurfrules"
+      ]
+    },
+    "fastBug": {
+      "maxApplicationFiles": 2
+    }
+  },
+  "applicationPaths": [
+    "app/**",
+    "src/**",
+    "pages/**",
+    "components/**",
+    "lib/**",
+    "server/**",
+    "api/**",
+    "backend/**",
+    "frontend/**"
+  ],
+  "sensitiveAreas": [
+    {
+      "name": "Database, migrations, and RLS",
+      "patterns": ["supabase/**", "prisma/**", "drizzle/**", "db/**", "database/**", "migrations/**", "**/migrations/**"]
+    },
+    {
+      "name": "Authentication, identity, and ownership",
+      "patterns": ["auth/**", "**/auth/**", "middleware.*", "**/middleware.*", "permissions/**", "**/permissions/**"]
+    },
+    {
+      "name": "Providers and external integrations",
+      "patterns": ["integrations/**", "providers/**", "openai/**", "**/openai/**", "webhooks/**", "**/webhooks/**"]
+    },
+    {
+      "name": "Commerce and public contracts",
+      "patterns": ["commerce/**", "checkout/**", "payments/**", "billing/**", "cart/**", "public/**", "api/public/**"]
+    },
+    {
+      "name": "Hosting, CI, and deployment",
+      "patterns": [".github/**", ".vercel/**", "vercel.json", "Dockerfile", "docker-compose*.yml", "infra/**", "terraform/**"]
+    }
+  ]
+}

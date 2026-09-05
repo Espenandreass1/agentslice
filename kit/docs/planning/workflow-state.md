@@ -1,6 +1,6 @@
 # Workflow State
 
-This is the only source of truth for the active phase and approval fields. Read it with `AGENT_RULES.md`, `active-context.md`, and `current-slice.md` before acting. Keep long-lived context in `active-context.md`, not here.
+This is the only source of truth for active planning phase and approval fields in document-led or long-running work. For an open formal PR, the PR is the live source for lane, implementation status, QA, decision, and rollback; do not make a follow-up docs commit merely to mirror a merge.
 
 ## Current state
 
@@ -14,7 +14,7 @@ This is the only source of truth for the active phase and approval fields. Read 
 
 **Release approved:** No
 
-**Next required action:** Ask up to five product intake questions, then update the active context and propose a small set of slice options.
+**Next required action:** Confirm the concrete current user problem and choose local exploration or a formal PR.
 
 ## Valid phases
 
@@ -37,13 +37,12 @@ NEXT_SLICE
 
 ## Hard stops
 
-- No approved slice: do not write implementation code.
-- `Spec approved` is not `Yes`: do not write implementation code.
-- The approved spec lacks likely touched files or areas: do not write implementation code.
-- `QA status` is `FAIL`: do not recommend release.
-- `Release approved` is not `Yes`: do not deploy or release.
-- The phase or approval fields are unclear: stop and ask where to resume.
+- No confirmed user problem: do not start a full slice/spec process.
+- No approved slice or controlled plan/spec when required: do not treat work as build-ready.
+- QA `FAIL`: do not recommend merge, release, or deployment.
+- No release approval: do not deploy or release.
+- Unclear workspace, phase, scope, lane, or approval: stop and ask.
 
 ## Update rule
 
-After every phase change, update only the six fields in **Current state**. Update `active-context.md` separately when confirmed active context changes, then refresh `checkpoint.md` for the handoff. The checkpoint cannot change phase or approval fields.
+Update the six **Current state** fields only for active planning. PR status is updated in the PR. Keep detail in `active-context.md`; use `checkpoint.md` only for exceptional handoffs.

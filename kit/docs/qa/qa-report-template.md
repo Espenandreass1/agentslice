@@ -1,43 +1,23 @@
-# QA Report: [Slice name]
+# QA Report: [Controlled change]
 
-Keep a small report to about 120 lines or fewer. If risk requires more, state why. Link to the approved spec and evidence; do not repeat the spec or large QA tables.
+Use this only when a PR's QA section is not sufficient for a controlled, audit-sensitive, or unusually risky change. Keep it about 120 lines or fewer, link to the PR/spec, and add no duplicated acceptance table.
 
 ## Result
 
 PASS / PASS WITH NOTES / FAIL
 
-## Evidence reviewed
+## Evidence and scope decision
 
-- Approved spec: [Path]
-- Changed files: [Command, commit, diff, or concise list]
-- Earlier QA report: [Path, only if directly relevant]
+- PR: [URL]
+- Controlled spec, if any: [Path]
+- Changed files: [Command, commit, or concise list]
+- Focused/default scope: [Selected tests and regression]
+- Broader checks: [Required/run/deferred and exact trigger]
+- Deferrals and residual risk: [Only relevant items]
 
-## Test scope decision
-
-- Default scope: [Focused acceptance + relevant domain regression / other]
-- Full suite: [Not required / Required and run / Required but deferred]
-- Reason: [Exact changed-surface trigger, or why focused scope was sufficient]
-- Test executions: [Number and purpose; use suite test count too when available]
-
-## Checks selected
-
-- [Check] — [Result and why it was relevant]
-
-## Checks deferred
-
-- [Check] — [Why it was not needed or could not run; residual risk]
-
-## Acceptance criteria
-
-- [ ] [Criterion reference] — [Pass/fail evidence]
-
-## Findings
+## Findings and recommendation
 
 - Release blockers: [None or concise list]
 - Non-blocking notes: [None or concise list]
-- Regression/security concern: [None or concise list]
-
-## QA confidence and recommendation
-
-[High/Medium/Low and why.]
-[Release / Do not release yet.]
+- Independent QA confidence: [High/Medium/Low and why]
+- Recommendation: [Merge/release / do not release]

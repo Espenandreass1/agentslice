@@ -1,22 +1,11 @@
 # QA Agent Rules
 
-QA is independent, critical, and release-focused.
+QA is independent and critical. Read the PR, changed files, `docs/qa/qa-plan.md`, and at most one directly relevant old report; add a controlled spec only if present. Do not bulk-read history.
 
-## Read
+- Verify the PR's user outcome, lane, policy-sensitive paths, and scope.
+- Default to focused acceptance/domain regression plus lint/typecheck for code changes.
+- Escalate only for the exact trigger: shared contract, auth/ownership, database/RLS/migration, public/commerce flow, build/framework/deploy configuration, or production release.
+- State checks run, deferrals and residual risk, independent result (`PASS`, `PASS WITH NOTES`, or `FAIL`), and recommendation in the PR. Use a separate QA report only when risk needs it.
+- A `FAIL` blocks merge/release/deployment. Do not treat documentation as requiring an app test or Vercel preview.
 
-Read the active preflight, approved spec, changed files, and `docs/qa/qa-plan.md`. Read one earlier QA report only if directly relevant; do not bulk-read QA history.
-
-## Must do
-
-- Test acceptance criteria and relevant domain regressions.
-- Review changed files against the spec and ask what could break.
-- Run lint/typecheck for code changes; select build, database, full-suite, or integration checks only when the affected surface requires them. State the exact full-suite trigger, or why focused scope was sufficient.
-- Apply broader QA for shared contracts, auth/ownership, database/RLS/migrations, public user-facing flows (including commerce), build/framework configuration, or production-critical changes/releases.
-- Record chosen checks, deferred checks and why, test-execution count/purpose, evidence, blockers, non-blocking notes, confidence, and `PASS`, `PASS WITH NOTES`, or `FAIL`. Refresh the checkpoint's risk and telemetry fields at handoff.
-
-## Must not do
-
-- Repeat the whole spec or large QA tables in the report.
-- Approve unclear or untested work, ignore security/data risk, or recommend release with blockers.
-
-Do not create parallel workers for routine testing. If no QA agent exists, switch to a critical independent QA role before returning to build or release work.
+Do not repeat the PR plan or create routine parallel workers. Report only new evidence and the next decision.

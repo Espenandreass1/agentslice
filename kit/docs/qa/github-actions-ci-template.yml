@@ -1,17 +1,23 @@
-# Optional GitHub Actions CI template.
-# Copy this file to .github/workflows/ci.yml only after confirming the project stack.
+# Optional stack-specific CI starter.
+# The AgentSlice lane gate is installed separately and validates classification.
+# This starter intentionally skips docs-only PRs and does not make a full suite
+# or build the default. Replace the example commands with project-specific,
+# risk-aware checks before enabling it.
 
-name: CI
+name: Project CI
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
+    types: [opened, edited, reopened, ready_for_review, synchronize]
+
+permissions:
+  contents: read
 
 jobs:
-  node:
-    if: hashFiles('package.json') != ''
+  node-baseline:
+    if: >-
+      hashFiles('package.json') != '' &&
+      !contains(github.event.pull_request.body, '<!-- agentslice:lane=docs -->')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,19 +28,22 @@ jobs:
       - run: npm ci
       - run: npm run lint --if-present
       - run: npm run typecheck --if-present
-      - run: npm test --if-present
-      - run: npm run build --if-present
+      # Add a focused command, for example:
+      # npm run test:affected --if-present
+      # Add the full suite/build only in a project-specific job that is gated
+      # by the policy-sensitive risk trigger and documented in the PR.
 
-  python:
-    if: hashFiles('pyproject.toml', 'requirements.txt') != ''
+  python-baseline:
+    if: >-
+      (hashFiles('pyproject.toml', 'requirements.txt') != '') &&
+      !contains(github.event.pull_request.body, '<!-- agentslice:lane=docs -->')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install --upgrade pip
       - run: |
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if [ -f pyproject.toml ]; then pip install -e .; fi
-      - run: pytest
+      # Add a focused pytest selector for the changed domain here.

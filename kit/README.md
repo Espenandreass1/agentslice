@@ -1,71 +1,35 @@
-# AgentSlice
+# AgentSlice Kit
 
-A Markdown workflow kit for building software with AI coding tools.
+This kit makes AI coding work PR-first without making every small change document-heavy.
 
-For setup, copy `INSTALL_PROMPT.md` into your AI coding tool.
+## Start here
 
-## What this is
+1. Read `INSTALL_PROMPT.md` in the real project—not in an unzipped copy of this kit.
+2. Set `agentslice.policy.json` to the canonical Git root and adapt its sensitive paths to the project.
+3. Enable the bundled GitHub lane gate and require it with human review in branch protection.
 
-This is a set of Markdown files, persistent rules, prompts, skills, QA checks and a state file that make the intended workflow explicit and easier for agents to resume.
+## Operating modes
 
-Public flow:
+- **Local exploration:** a short `explore/<idea>` branch tests a concrete current user problem. It has no PR, preview, spec, QA record, checkpoint, merge, or deployment. Sensitive work must be promoted promptly.
+- **Formal PR:** the PR template holds lane, scope, completed work, QA, merge/release decision, and rollback. Use one of four lanes: `docs`, `fast-bug`, `standard-feature`, or `controlled-change`.
 
-```text
-Ask -> Plan -> Approve -> Build -> QA -> Release -> Next
-```
+Use a separate spec, QA report, release recommendation, or checkpoint only when a controlled, audit-sensitive, or unusually risky change needs information the PR cannot safely carry.
 
-## Who this is for
+## Main files
 
-This kit is for people who are already using an AI coding tool such as Cursor, Claude Code, Codex, Windsurf or similar, but want a clearer workflow before the agent starts changing files.
+- `AGENT_RULES.md`: canonical workflow contract
+- `agentslice.policy.json`: workspace and sensitive-area policy
+- `.github/PULL_REQUEST_TEMPLATE.md`: live PR record
+- `.github/workflows/agentslice-pr-gate.yml`: lane/path CI check
+- `docs/planning/active-context.md`: short active product context
+- `docs/planning/workflow-state.md`: planning phase and approval source for document-led work
+- `docs/archive/README.md`: targeted history index
+- `.agents/skills/`, `.claude/skills/`: reusable AgentSlice skills
 
-You should be comfortable opening a project folder, unzipping files into it, and pasting a prompt. This is not a no-code app builder.
+## Context and gates
 
-## Soft gates, not hard enforcement
+At startup, validate the policy workspace and read only `AGENT_RULES.md`, active context, workflow state, and current slice. Add role-specific files only when needed. Do not bulk-read historical folders.
 
-The approval gates are persistent workflow rules, not technical enforcement. They help the agent stop at slice, spec, QA and release checkpoints, but they do not block tool calls at the operating-system or editor level.
+The formal gates remain: human scope approval, human controlled plan/spec approval, independent QA `PASS`/`PASS WITH NOTES`, then human release approval. CI can enforce lane classification, but it does not replace human review or the safeguards for auth, data, ownership, commerce, and production changes.
 
-For hard enforcement, you would need tool-specific hooks or a real runtime gatekeeper. This kit keeps the default install portable and simple.
-
-## What this does NOT do
-
-- It is not an executable runtime.
-- It is not a validator or runtime gatekeeper.
-- It does not install editor hooks or block file edits at the tool level.
-- It cannot technically prevent a user or model from ignoring the rules.
-- It does not generate a complete app by itself.
-- It does not replace human approval, product judgment, code review, QA, or deployment responsibility.
-
-The value is persistent workflow structure: project context, approval gates, QA handoff, resumable state, and repeatable next-slice planning.
-
-## Main Files
-
-- `AGENT_RULES.md`: permanent workflow contract for agents
-- `INSTALL_PROMPT.md`: copy-paste prompt to start the workflow
-- `docs/planning/active-context.md`: compact active context for a start or resume
-- `docs/planning/workflow-state.md`: phase and approval source of truth
-- `docs/product/vision.md`: lightweight product context
-- `docs/engineering/tech-stack.md`: chosen or recommended stack
-- `docs/planning/next-slices.md`: candidate slices
-- `ROADMAP_SLICES.md`: human-readable next-slice view
-- `docs/planning/current-slice.md`: approved/current slice
-- `docs/planning/checkpoint.md`: compact handoff, evidence pointers, risk, and per-slice efficiency estimate
-- `docs/archive/README.md`: targeted history index and migration routine
-- `docs/specs/spec-template.md`: adaptive build spec template
-- `docs/qa/qa-report-template.md`: QA result template
-- `docs/qa/github-actions-ci-template.yml`: optional CI starting point
-- `AGENTS.md`, `CLAUDE.md`, `.cursor/`, `.windsurf/`: tool-specific workflow rules
-- `.agents/skills/`, `.claude/skills/`: reusable workflow skills where supported
-
-## Workflow
-
-First use:
-
-```text
-INSTALL_PROMPT.md -> intake questions -> tiny slice approval -> spec approval -> build -> QA
-```
-
-Do not start implementation until a slice and spec are clearly approved. Natural approval language is fine.
-
-## Context and history
-
-At startup, agents read only `AGENT_RULES.md`, `active-context.md`, `workflow-state.md`, `current-slice.md`, and the short active checkpoint. Each role then adds only its immediate inputs. Specs, QA reports, releases, decisions, and archives are opened through direct links or the archive index for a concrete need—not as bulk preflight. Checkpoints preserve handoff/telemetry per slice and are archived when superseded. See `docs/agents/migrating-to-active-context.md` when upgrading an existing project.
+See `docs/agents/migrating-to-active-context.md` for the safe additive migration routine.

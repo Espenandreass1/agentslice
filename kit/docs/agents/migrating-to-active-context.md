@@ -1,11 +1,13 @@
 # Migrating an Existing AgentSlice Project
 
-1. Add the current kit's `AGENT_RULES.md`, `docs/planning/active-context.md`, `docs/planning/checkpoint.md`, and `docs/archive/README.md` without deleting existing records.
-2. Copy only the currently true product summary, constraints, current slice/spec, next gate, QA policy, and nearest priorities into `active-context.md`.
-3. Reduce `workflow-state.md` to phase, approval fields, next action, valid phases, and hard stops. Save its former long context as a dated snapshot, for example `docs/archive/2026-08/workflow-state-before-active-context.md`.
-4. Seed `checkpoint.md` with the current phase summary, authoritative file links, checks, risks, next action, and a clearly labelled initial telemetry estimate. It must never replace state fields.
-5. Keep one to three live candidates in `next-slices.md`; archive older proposals. Keep only active constraints in `decisions.md`; archive closed decisions. Keep one short user-facing entry per release in `changelog.md`; archive older entries when needed.
-6. After a human-approved gate, archive superseded checkpoint/state snapshots and other closed records in a dated folder. Add every moved record and any old-path redirect to `docs/archive/README.md`. If an incoming link cannot be updated, leave a short stub at the old path pointing to its archived location.
-7. Update tool rules and bundled skills from this kit. Existing specs, QA reports, and release notes remain valid historical evidence and should be opened only through the index or a direct link.
+This migration is additive and preserves old projects and history.
 
-The approval gates do not change: slice approval, spec approval, independent QA `PASS`/`PASS WITH NOTES`, then human release approval.
+1. Add `AGENT_RULES.md`, `agentslice.policy.json`, `.github/PULL_REQUEST_TEMPLATE.md`, `.github/agentslice/verify-pr-lane.mjs`, and `.github/workflows/agentslice-pr-gate.yml` without replacing unrelated GitHub workflows. Set `canonicalWorkspace` to the one Git root agents should edit.
+2. Adapt `sensitiveAreas`, `applicationPaths`, and the docs/fast-bug lane limits in the policy to the actual project. For Matlenke, include Supabase/database/RLS, login/ownership/creator profiles, OpenAI/social imports, Oda/cart/commerce, public recipe/store pages, and Vercel/GitHub Actions/deploy configuration.
+3. Protect the main branch in GitHub: require human review and the **Verify AgentSlice lane** check. CI validates classification; branch protection enforces review.
+4. Seed `active-context.md` from current facts only. Reduce `workflow-state.md` to its active fields. Keep legacy specs, QA reports, and release records valid; do not bulk-import them into new context.
+5. Move closed decisions, old proposals, old state snapshots, exceptional checkpoints, and older release notes to a dated archive. Update `docs/archive/README.md` and leave redirects for existing links.
+6. Use a short `explore/<idea>` branch for a low-risk idea. It gets no PR, preview, spec, QA record, or deployment. Promote anything valuable to a PR; promote sensitive work immediately as `controlled-change`.
+7. For new PRs, use the template and keep lane, progress, QA, merge/release decision, and rollback there. Do not add a docs-only commit after merge just to update status.
+
+The formal gates still apply: human scope approval; human controlled plan/spec approval; independent QA `PASS`/`PASS WITH NOTES`; human release approval. The evidence can be compact and PR-based, but auth, data, ownership, commerce, and production safeguards are not relaxed.
